@@ -29,7 +29,7 @@ const useBulletinBoard = () => {
               );
               break;
             case "DELETE":
-              setPosts((prev) => prev.filter((p) => p.id === payload.new.id));
+              setPosts((prev) => prev.filter((p) => p.id !== payload.old.id));
               break;
             default:
               break;
