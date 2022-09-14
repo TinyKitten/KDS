@@ -3,20 +3,16 @@ import useBulletinBoard from "../../hooks/useBulletinBoard";
 import { textMixin } from "../../utils/textMixin";
 
 const MemoWidget = () => {
-  const posts = useBulletinBoard();
+  const [post] = useBulletinBoard();
 
-  if (!posts.length) {
+  if (!post) {
     return null;
   }
 
   return (
     <Container>
-      <FirstPostTitle numberOfLines={2}>
-        {posts[posts.length - 1]?.heading.trim?.()}
-      </FirstPostTitle>
-      <FirstPostBody numberOfLines={10}>
-        {posts[posts.length - 1]?.text.trim?.()}
-      </FirstPostBody>
+      <FirstPostTitle numberOfLines={2}>{post.heading}</FirstPostTitle>
+      <FirstPostBody numberOfLines={10}>{post.text}</FirstPostBody>
     </Container>
   );
 };

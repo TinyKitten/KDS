@@ -12,16 +12,16 @@ const useBulletinBoard = () => {
     (async () => {
       let { data, error } = await supabase
         .from<bulletinBoardData>("bulletinboard")
-        .select("*");
-      if (data) {
-        setPosts(data);
-      }
+        .select("*")
+        .order("id", { ascending: false });
+      setPosts(data ?? []);
+
       supabase
         .from("bulletinboard")
         .on("*", (payload) => {
           switch (payload.eventType) {
             case "INSERT":
-              setPosts((prev) => [...prev, payload.new]);
+              setPosts((prev) => [payload.new, ...prev]);
               break;
             case "UPDATE":
               setPosts((prev) =>
