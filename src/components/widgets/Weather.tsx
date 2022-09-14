@@ -1,14 +1,14 @@
 import { PLACED_CITY_NAME, PLACED_LATITUDE, PLACED_LONGITUDE } from "@env";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components/native";
-import { fetchOneCallAPI } from "../api/owm";
-import { OWMOneCallAPIData } from "../models/OWM";
-import getRotation from "../utils/rotation";
-import { textMixin } from "../utils/textMixin";
-import getWeatherIcon from "../utils/weatherIcon";
-import HighestChevron from "./icons/HighestChevron";
-import LowestTempChevron from "./icons/LowestChevron";
-import Wind from "./icons/Wind";
+import { fetchOneCallAPI } from "../../api/owm";
+import { OWMOneCallAPIData } from "../../models/OWM";
+import getRotation from "../../utils/rotation";
+import { textMixin } from "../../utils/textMixin";
+import getWeatherIcon from "../../utils/weatherIcon";
+import HighestChevron from "../icons/HighestChevron";
+import LowestTempChevron from "../icons/LowestChevron";
+import Wind from "../icons/Wind";
 
 const WeatherWidget = () => {
   const {
