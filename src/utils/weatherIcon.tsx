@@ -6,7 +6,10 @@ import Snow from "../components/icons/Snow";
 import Sunny from "../components/icons/Sunny";
 import Thunderstorm from "../components/icons/Thunderstorm";
 
-const getWeatherIcon = (id: number) => {
+const getWeatherIcon = (id: number | undefined) => {
+  if (!id) {
+    return null;
+  }
   if (id === 800) {
     return <Sunny />;
   }

@@ -1,7 +1,8 @@
-import { PLACED_LATITUDE, PLACED_LONGITUDE } from "@env";
+import { PLACED_CITY_NAME, PLACED_LATITUDE, PLACED_LONGITUDE } from "@env";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components/native";
-import { fetchCurrentWeather } from "../api/owm";
+import { fetchOneCallAPI } from "../api/owm";
+import { OWMOneCallAPIData } from "../models/OWM";
 import getRotation from "../utils/rotation";
 import { textMixin } from "../utils/textMixin";
 import getWeatherIcon from "../utils/weatherIcon";
@@ -10,52 +11,60 @@ import LowestTempChevron from "./icons/LowestChevron";
 import Wind from "./icons/Wind";
 
 const WeatherWidget = () => {
-  const query = useQuery<OpenWeatherMapData>(
-    ["owm", PLACED_LATITUDE, PLACED_LONGITUDE],
-    fetchCurrentWeather,
+  const {
+    error: weatherError,
+    data: weatherData,
+    isLoading: weatherLoading,
+  } = useQuery<OWMOneCallAPIData>(
+    ["oneCallAPI", PLACED_LATITUDE, PLACED_LONGITUDE],
+    fetchOneCallAPI,
     {
       refetchInterval: 1000 * 60 * 60, // 1h
     }
   );
 
-  if (query.error) {
-    console.error(query.error);
+  if (!!weatherError) {
+    console.error(weatherError);
     return null;
   }
 
-  if (!query.data) {
+  if (weatherLoading) {
     return null;
   }
 
-  const windRotation = getRotation(query.data.wind.deg);
-  const weatherIcon = getWeatherIcon(query.data.weather[0]?.id);
+  const windRotation = getRotation(weatherData?.current.wind_deg);
+  const weatherIcon = getWeatherIcon(weatherData?.current.weather[0]?.id);
 
   return (
     <Container>
-      <PlaceName>
-        {query.data.name}, {query.data.sys.country}
-      </PlaceName>
+      <PlaceName>{PLACED_CITY_NAME}</PlaceName>
       <ConditionContainer>
         {weatherIcon}
         <ValuesContainer>
           <CurrentTemperature>
-            {Math.round(query.data.main.temp)}°
+            {Math.floor(weatherData?.current.temp ?? 0)}°
           </CurrentTemperature>
           <RowContainer>
             <MinMaxItemContainer>
               <LowestTempChevron />
-              <ValueText>{Math.round(query.data.main.temp_min)}°</ValueText>
+              <ValueText>
+                {Math.floor(weatherData?.daily[0].temp.min ?? 0)}°
+              </ValueText>
             </MinMaxItemContainer>
             <MinMaxSpacer />
             <MinMaxItemContainer>
               <HighestChevron />
-              <ValueText>{Math.round(query.data.main.temp_max)}°</ValueText>
+              <ValueText>
+                {Math.floor(weatherData?.daily[0].temp.max ?? 0)}°
+              </ValueText>
             </MinMaxItemContainer>
           </RowContainer>
           <RowContainer>
             <Wind />
             <ValueAndUnitTextContainer>
-              <ValueText>{Math.round(query.data.wind.speed)}</ValueText>
+              <ValueText>
+                {Math.floor(weatherData?.current?.wind_speed ?? 0)}
+              </ValueText>
               <ValueUnitText>{windRotation}</ValueUnitText>
             </ValueAndUnitTextContainer>
           </RowContainer>

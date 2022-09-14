@@ -12,7 +12,7 @@ const useAnalect = (): Analect | undefined => {
 
   useEffect(() => {
     updateAnalect();
-    setInterval(updateAnalect, 1000 * 60 * 60); // 1h
+    setInterval(updateAnalect, 1000 * 60 * 30); // 30min
   }, []);
 
   return analect;
