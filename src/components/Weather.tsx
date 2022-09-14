@@ -42,20 +42,20 @@ const WeatherWidget = () => {
         {weatherIcon}
         <ValuesContainer>
           <CurrentTemperature>
-            {Math.floor(weatherData?.current.temp ?? 0)}°
+            {Math.round(weatherData?.current.temp ?? 0)}°
           </CurrentTemperature>
           <RowContainer>
             <MinMaxItemContainer>
               <LowestTempChevron />
               <ValueText>
-                {Math.floor(weatherData?.daily[0].temp.min ?? 0)}°
+                {Math.round(weatherData?.daily[0].temp.min ?? 0)}°
               </ValueText>
             </MinMaxItemContainer>
             <MinMaxSpacer />
             <MinMaxItemContainer>
               <HighestChevron />
               <ValueText>
-                {Math.floor(weatherData?.daily[0].temp.max ?? 0)}°
+                {Math.round(weatherData?.daily[0].temp.max ?? 0)}°
               </ValueText>
             </MinMaxItemContainer>
           </RowContainer>
@@ -63,7 +63,7 @@ const WeatherWidget = () => {
             <Wind />
             <ValueAndUnitTextContainer>
               <ValueText>
-                {Math.floor(weatherData?.current?.wind_speed ?? 0)}
+                {Math.round(weatherData?.current?.wind_speed ?? 0)}
               </ValueText>
               <ValueUnitText>{windRotation}</ValueUnitText>
             </ValueAndUnitTextContainer>
