@@ -12,7 +12,7 @@ const MemoWidget = () => {
   return (
     <Container>
       <FirstPostTitle numberOfLines={1}>
-        {posts[0].heading.length ? posts[0].heading.trim() : "NO TITLE"}
+        {posts[0].heading.trim()}
       </FirstPostTitle>
       <FirstPostBody numberOfLines={10}>{posts[0].text.trim()}</FirstPostBody>
     </Container>
