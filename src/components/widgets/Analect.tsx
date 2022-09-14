@@ -21,7 +21,7 @@ export const AnalectWidgetContainer = styled.View`
   position: absolute;
   left: 0;
   bottom: 0;
-  padding-right: 150px;
+  padding-right: 100px;
 `;
 
 export default AnalectWidget;
