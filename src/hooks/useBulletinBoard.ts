@@ -21,7 +21,7 @@ const useBulletinBoard = () => {
         .on("*", (payload) => {
           switch (payload.eventType) {
             case "INSERT":
-              setPosts((prev) => [payload.new, ...prev]);
+              setPosts((prev) => [...prev, payload.new]);
               break;
             case "UPDATE":
               setPosts((prev) =>
