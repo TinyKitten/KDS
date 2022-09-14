@@ -19,7 +19,7 @@ const WeatherWidget = () => {
     ["oneCallAPI", PLACED_LATITUDE, PLACED_LONGITUDE],
     fetchOneCallAPI,
     {
-      refetchInterval: 1000 * 60 * 60, // 1h
+      refetchInterval: 1000 * 60 * 30, // 30min
     }
   );
 
