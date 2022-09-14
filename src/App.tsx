@@ -39,7 +39,7 @@ export default function App() {
 
 const RootContainer = styled.View`
   flex: 1;
-  background-color: #212121;
+  background-color: #fff;
   padding: 50px;
 `;
 
