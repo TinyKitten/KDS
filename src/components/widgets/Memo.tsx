@@ -12,7 +12,7 @@ const MemoWidget = () => {
   return (
     <Container>
       <FirstPostTitle numberOfLines={2}>{post.heading}</FirstPostTitle>
-      <FirstPostBody numberOfLines={10}>{post.text}</FirstPostBody>
+      <FirstPostBody numberOfLines={9}>{post.text}</FirstPostBody>
     </Container>
   );
 };
