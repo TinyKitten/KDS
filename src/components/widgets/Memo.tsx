@@ -1,9 +1,11 @@
 import styled from "styled-components/native";
 import useBulletinBoard from "../../hooks/useBulletinBoard";
+import useSpeech from "../../hooks/useSpeech";
 import { textMixin } from "../../utils/textMixin";
 
 const MemoWidget = () => {
   const [post] = useBulletinBoard();
+  useSpeech();
 
   if (!post) {
     return null;

@@ -1,6 +1,5 @@
-export type BulletinBoardData = {
+export type SpeechRequestData = {
   id: number;
-  heading: string;
   text: string;
   created_at: string;
 };
