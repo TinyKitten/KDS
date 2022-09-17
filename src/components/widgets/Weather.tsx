@@ -36,11 +36,9 @@ const WeatherWidget = () => {
   const windRotation = getRotation(weatherData?.current.wind_deg);
   const weatherIcon = getWeatherIcon(weatherData?.current.weather[0]?.id);
 
-  const chanceOfRain = Math.round(
-    weatherData?.current?.rain?.["1h"]
-      ? weatherData?.current?.rain?.["1h"] * 100
-      : 0
-  );
+  const chanceOfRain = weatherData?.current?.rain?.["1h"]
+    ? weatherData?.current?.rain?.["1h"] * 100
+    : 0;
 
   return (
     <Container>
