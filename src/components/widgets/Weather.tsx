@@ -46,33 +46,33 @@ const WeatherWidget = () => {
             {Math.round(weatherData?.current.temp ?? 0)}°
           </CurrentTemperature>
           <RowContainer>
-            <ItemContainer>
+            <UpItemContainer>
               <LowestTempChevron />
               <ValueText>
                 {Math.round(weatherData?.daily[0].temp.min ?? 0)}°
               </ValueText>
-            </ItemContainer>
-            <ItemContainer>
+            </UpItemContainer>
+            <UpItemContainer>
               <HighestChevron />
               <ValueText>
                 {Math.round(weatherData?.daily[0].temp.max ?? 0)}°
               </ValueText>
-            </ItemContainer>
+            </UpItemContainer>
           </RowContainer>
           <RowContainer>
-            <ItemContainer>
+            <DownItemContainer>
               <Wind />
               <ValueText>
                 {Math.round(weatherData?.current?.wind_speed ?? 0)}
               </ValueText>
               <ValueUnitText>{windRotation}</ValueUnitText>
-            </ItemContainer>
-            <ItemContainer>
+            </DownItemContainer>
+            <DownItemContainer>
               <Umbrella />
               <ValueText>
                 {Math.round(weatherData?.current?.rain?.["1h"] ?? 0)}%
               </ValueText>
-            </ItemContainer>
+            </DownItemContainer>
           </RowContainer>
         </ValuesContainer>
       </ConditionContainer>
@@ -112,9 +112,14 @@ const RowContainer = styled.View`
   flex: 1;
 `;
 
-const ItemContainer = styled.View`
+const UpItemContainer = styled.View`
   flex-direction: row;
   align-items: center;
+  flex: 1;
+`;
+
+const DownItemContainer = styled.View`
+  flex-direction: row;
   flex: 1;
 `;
 
