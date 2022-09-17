@@ -8,6 +8,7 @@ import { textMixin } from "../../utils/textMixin";
 import getWeatherIcon from "../../utils/weatherIcon";
 import HighestChevron from "../icons/HighestChevron";
 import LowestTempChevron from "../icons/LowestChevron";
+import Umbrella from "../icons/Umbrella";
 import Wind from "../icons/Wind";
 
 const WeatherWidget = () => {
@@ -61,12 +62,15 @@ const WeatherWidget = () => {
           </RowContainer>
           <RowContainer>
             <Wind />
-            <ValueAndUnitTextContainer>
-              <ValueText>
-                {Math.round(weatherData?.current?.wind_speed ?? 0)}
-              </ValueText>
-              <ValueUnitText>{windRotation}</ValueUnitText>
-            </ValueAndUnitTextContainer>
+            <ValueText>
+              {Math.round(weatherData?.current?.wind_speed ?? 0)}
+            </ValueText>
+            <ValueUnitText>{windRotation}</ValueUnitText>
+            <WindChanceOfRainSpacer />
+            <Umbrella />
+            <ValueText>
+              {Math.round(weatherData?.current?.rain?.["1h"] ?? 0)}%
+            </ValueText>
           </RowContainer>
         </ValuesContainer>
       </ConditionContainer>
@@ -122,14 +126,14 @@ const MinMaxSpacer = styled.View`
   width: 11px;
 `;
 
+const WindChanceOfRainSpacer = styled.View`
+  width: 6px;
+`;
+
 const ValueUnitText = styled.Text`
   ${textMixin}
   font-size: 8px;
   line-height: ${19.54 / 2}px;
-`;
-
-const ValueAndUnitTextContainer = styled.View`
-  flex-direction: row;
 `;
 
 export const WeatherWidgetContainer = styled.View`
