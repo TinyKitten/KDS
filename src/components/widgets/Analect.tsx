@@ -29,8 +29,8 @@ export default AnalectWidget;
 const AnalectText = styled.Text`
   ${textMixin}
   font-weight: 600;
-  font-size: 24px;
-  line-height: 36px;
+  font-size: 21px;
+  line-height: 24px;
 `;
 const AnalectAuthor = styled.Text`
   ${textMixin}
