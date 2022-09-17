@@ -46,31 +46,33 @@ const WeatherWidget = () => {
             {Math.round(weatherData?.current.temp ?? 0)}°
           </CurrentTemperature>
           <RowContainer>
-            <MinMaxItemContainer>
+            <ItemContainer>
               <LowestTempChevron />
               <ValueText>
                 {Math.round(weatherData?.daily[0].temp.min ?? 0)}°
               </ValueText>
-            </MinMaxItemContainer>
-            <MinMaxSpacer />
-            <MinMaxItemContainer>
+            </ItemContainer>
+            <ItemContainer>
               <HighestChevron />
               <ValueText>
                 {Math.round(weatherData?.daily[0].temp.max ?? 0)}°
               </ValueText>
-            </MinMaxItemContainer>
+            </ItemContainer>
           </RowContainer>
           <RowContainer>
-            <Wind />
-            <ValueText>
-              {Math.round(weatherData?.current?.wind_speed ?? 0)}
-            </ValueText>
-            <ValueUnitText>{windRotation}</ValueUnitText>
-            <WindChanceOfRainSpacer />
-            <Umbrella />
-            <ValueText>
-              {Math.round(weatherData?.current?.rain?.["1h"] ?? 0)}%
-            </ValueText>
+            <ItemContainer>
+              <Wind />
+              <ValueText>
+                {Math.round(weatherData?.current?.wind_speed ?? 0)}
+              </ValueText>
+              <ValueUnitText>{windRotation}</ValueUnitText>
+            </ItemContainer>
+            <ItemContainer>
+              <Umbrella />
+              <ValueText>
+                {Math.round(weatherData?.current?.rain?.["1h"] ?? 0)}%
+              </ValueText>
+            </ItemContainer>
           </RowContainer>
         </ValuesContainer>
       </ConditionContainer>
@@ -107,12 +109,13 @@ const CurrentTemperature = styled.Text`
 
 const RowContainer = styled.View`
   flex-direction: row;
+  flex: 1;
 `;
 
-const MinMaxItemContainer = styled.View`
+const ItemContainer = styled.View`
   flex-direction: row;
-  justify-content: center;
   align-items: center;
+  flex: 1;
 `;
 
 const ValueText = styled.Text`
@@ -120,14 +123,6 @@ const ValueText = styled.Text`
   font-size: 16px;
   line-height: 19.54px;
   margin-left: 2px;
-`;
-
-const MinMaxSpacer = styled.View`
-  width: 11px;
-`;
-
-const WindChanceOfRainSpacer = styled.View`
-  width: 6px;
 `;
 
 const ValueUnitText = styled.Text`
