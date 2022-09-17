@@ -8,7 +8,6 @@ import { textMixin } from "../../utils/textMixin";
 import getWeatherIcon from "../../utils/weatherIcon";
 import HighestChevron from "../icons/HighestChevron";
 import LowestTempChevron from "../icons/LowestChevron";
-import Umbrella from "../icons/Umbrella";
 import Wind from "../icons/Wind";
 
 const WeatherWidget = () => {
@@ -35,10 +34,6 @@ const WeatherWidget = () => {
 
   const windRotation = getRotation(weatherData?.current.wind_deg);
   const weatherIcon = getWeatherIcon(weatherData?.current.weather[0]?.id);
-
-  const chanceOfRain = weatherData?.current?.rain?.["1h"]
-    ? weatherData?.current?.rain?.["1h"] * 100
-    : 0;
 
   return (
     <Container>
@@ -70,10 +65,6 @@ const WeatherWidget = () => {
                 {Math.round(weatherData?.current?.wind_speed ?? 0)}
               </ValueText>
               <ValueUnitText>{windRotation}</ValueUnitText>
-            </DownItemContainer>
-            <DownItemContainer>
-              <Umbrella />
-              <ValueText>{chanceOfRain}%</ValueText>
             </DownItemContainer>
           </RowContainer>
         </ValuesContainer>
