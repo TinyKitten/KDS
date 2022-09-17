@@ -36,6 +36,12 @@ const WeatherWidget = () => {
   const windRotation = getRotation(weatherData?.current.wind_deg);
   const weatherIcon = getWeatherIcon(weatherData?.current.weather[0]?.id);
 
+  const chanceOfRain = Math.round(
+    weatherData?.current?.rain?.["1h"]
+      ? weatherData?.current?.rain?.["1h"] * 100
+      : 0
+  );
+
   return (
     <Container>
       <PlaceName>{PLACED_CITY_NAME}</PlaceName>
@@ -69,9 +75,7 @@ const WeatherWidget = () => {
             </DownItemContainer>
             <DownItemContainer>
               <Umbrella />
-              <ValueText>
-                {Math.round(weatherData?.current?.rain?.["1h"] ?? 0)}%
-              </ValueText>
+              <ValueText>{chanceOfRain}%</ValueText>
             </DownItemContainer>
           </RowContainer>
         </ValuesContainer>

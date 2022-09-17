@@ -13,22 +13,22 @@ const getWeatherIcon = (id: number | undefined) => {
   if (id === 800) {
     return <Sunny />;
   }
-  if (id > 800) {
+  if (id >= 800) {
     return <Cloudy />;
   }
-  if (id > 700) {
+  if (id >= 700) {
     return <Foggy />;
   }
-  if (id > 600) {
+  if (id >= 600) {
     return <Snow />;
   }
-  if (id > 500) {
+  if (id >= 500) {
     return <Rainy />;
   }
-  if (id > 300) {
+  if (id >= 300) {
     return <Drizzle />;
   }
-  if (id > 200) {
+  if (id >= 200) {
     return <Thunderstorm />;
   }
   return null;
