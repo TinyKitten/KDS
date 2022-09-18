@@ -21,6 +21,7 @@ import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
 import me.tinykitten.kds.BuildConfig;
+import me.tinykitten.kds.KDSPackage;
 import me.tinykitten.kds.newarchitecture.components.MainComponentsRegistry;
 import me.tinykitten.kds.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class MainApplicationReactNativeHost extends ReactNativeHost {
     //     packages.add(new TurboReactPackage() { ... });
     // If you have custom Fabric Components, their ViewManagers should also be loaded here
     // inside a ReactPackage.
+    packages.add(new KDSPackage());
     return packages;
   }
 

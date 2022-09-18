@@ -1,7 +1,10 @@
-import { PLACED_CITY_NAME, PLACED_LATITUDE, PLACED_LONGITUDE } from "@env";
 import { useQuery } from "@tanstack/react-query";
+import * as Location from "expo-location";
+import { useEffect, useMemo } from "react";
 import styled from "styled-components/native";
 import { fetchOneCallAPI } from "../../api/owm";
+import useGeolocation from "../../hooks/useGeolocation";
+import useReverseGeocode from "../../hooks/useReverseGeocoding";
 import { OWMOneCallAPIData } from "../../models/OWM";
 import getRotation from "../../utils/rotation";
 import { textMixin } from "../../utils/textMixin";
@@ -12,19 +15,76 @@ import Wind from "../icons/Wind";
 
 const WeatherWidget = () => {
   const {
+    error: locationError,
+    isLoading: locationLoading,
+    coords,
+  } = useGeolocation();
+  const {
     error: weatherError,
     data: weatherData,
     isLoading: weatherLoading,
   } = useQuery<OWMOneCallAPIData>(
-    ["oneCallAPI", PLACED_LATITUDE, PLACED_LONGITUDE],
-    fetchOneCallAPI,
+    ["oneCallAPI", coords?.latitude, coords?.longitude],
+    () => fetchOneCallAPI(coords?.latitude, coords?.longitude),
     {
+      enabled: !locationLoading && !!coords,
       refetchInterval: 1000 * 60 * 30, // 30min
     }
   );
+  const {
+    error: reverseGeocodingError,
+    isLoading: reverseGeocodingLoading,
+    data: reverseGeocodingRes,
+  } = useReverseGeocode(coords?.latitude, coords?.longitude);
+
+  useEffect(() => {
+    async () => {
+      if (!coords) {
+        return;
+      }
+      try {
+        Location.reverseGeocodeAsync({
+          latitude: coords?.latitude,
+          longitude: coords?.longitude,
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (reverseGeocodingError) {
+      console.error(reverseGeocodingError);
+    }
+  }, []);
+
+  const placeName = useMemo(() => {
+    if (reverseGeocodingLoading) {
+      return "Loading...";
+    }
+    if (reverseGeocodingError) {
+      return "";
+    }
+    const results = reverseGeocodingRes?.results ?? [];
+    const addrComps = results[0].address_components ?? [];
+    console.log(addrComps);
+    if (!results.length) {
+      return "Unknown";
+    }
+
+    const pref = addrComps.find(
+      (c) =>
+        c.types.findIndex((t) => t === "administrative_area_level_1") !== -1
+    );
+    const city = addrComps.find(
+      (c) => c.types.findIndex((t) => t === "locality") !== -1
+    );
+
+    return `${city?.short_name}, ${pref?.short_name}`;
+  }, [reverseGeocodingLoading, reverseGeocodingError, reverseGeocodingRes]);
 
   if (!!weatherError) {
-    console.error(weatherError);
     return null;
   }
 
@@ -37,7 +97,7 @@ const WeatherWidget = () => {
 
   return (
     <Container>
-      <PlaceName>{PLACED_CITY_NAME}</PlaceName>
+      <PlaceName>{placeName}</PlaceName>
       <ConditionContainer>
         {weatherIcon}
         <ValuesContainer>
