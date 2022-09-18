@@ -68,7 +68,6 @@ const WeatherWidget = () => {
     }
     const results = reverseGeocodingRes?.results ?? [];
     const addrComps = results[0].address_components ?? [];
-    console.log(addrComps);
     if (!results.length) {
       return "Unknown";
     }
