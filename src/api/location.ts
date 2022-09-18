@@ -21,7 +21,7 @@ export const fetchReverseGeocodeAPI = async (
   longitude: number
 ) => {
   const res = await fetch(
-    `https://maps.google.com/maps/api/geocode/json?latlng=${latitude},${longitude}&sensor=false&key=${GOOGLE_MAPS_API_KEY}`
+    `https://maps.google.com/maps/api/geocode/json?latlng=${latitude},${longitude}&sensor=false&language=en&key=${GOOGLE_MAPS_API_KEY}`
   );
   return res.json();
 };
