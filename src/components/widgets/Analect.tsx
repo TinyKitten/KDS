@@ -30,7 +30,7 @@ const AnalectText = styled.Text`
   ${textMixin}
   font-weight: 600;
   font-size: 21px;
-  line-height: 24px;
+  line-height: 26px;
 `;
 const AnalectAuthor = styled.Text`
   ${textMixin}
