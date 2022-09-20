@@ -12,11 +12,6 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class WiFiAccessPointsModule extends ReactContextBaseJavaModule {
     WiFiAccessPointsModule(ReactApplicationContext context) {
         super(context);

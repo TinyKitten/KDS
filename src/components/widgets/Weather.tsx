@@ -53,12 +53,6 @@ const WeatherWidget = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (reverseGeocodingError) {
-      console.error(reverseGeocodingError);
-    }
-  }, []);
-
   const placeName = useMemo(() => {
     if (reverseGeocodingLoading) {
       return "Loading...";
@@ -83,12 +77,12 @@ const WeatherWidget = () => {
     return `${city?.short_name}, ${pref?.short_name}`;
   }, [reverseGeocodingLoading, reverseGeocodingError, reverseGeocodingRes]);
 
-  if (!!weatherError) {
-    return null;
-  }
-
   if (weatherLoading) {
-    return null;
+    return (
+      <Container>
+        <PlaceName>Loading...</PlaceName>
+      </Container>
+    );
   }
 
   const windRotation = getRotation(weatherData?.current.wind_deg);
