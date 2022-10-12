@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import * as Location from "expo-location";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import styled from "styled-components/native";
 import { fetchOneCallAPI } from "../../api/owm";
 import useGeolocation from "../../hooks/useGeolocation";
@@ -18,6 +17,7 @@ const WeatherWidget = () => {
     error: locationError,
     isLoading: locationLoading,
     coords,
+    granted: locationPermissionGranted,
   } = useGeolocation();
   const {
     error: weatherError,
@@ -36,22 +36,6 @@ const WeatherWidget = () => {
     isLoading: reverseGeocodingLoading,
     data: reverseGeocodingRes,
   } = useReverseGeocode(coords?.latitude, coords?.longitude);
-
-  useEffect(() => {
-    async () => {
-      if (!coords) {
-        return;
-      }
-      try {
-        Location.reverseGeocodeAsync({
-          latitude: coords?.latitude,
-          longitude: coords?.longitude,
-        });
-      } catch (err) {
-        console.error(err);
-      }
-    };
-  }, []);
 
   const placeName = useMemo(() => {
     if (reverseGeocodingLoading) {
@@ -81,6 +65,14 @@ const WeatherWidget = () => {
     return (
       <Container>
         <PlaceName>Loading...</PlaceName>
+      </Container>
+    );
+  }
+
+  if (!locationPermissionGranted) {
+    return (
+      <Container>
+        <PlaceName>Location permission has not been granted.</PlaceName>
       </Container>
     );
   }

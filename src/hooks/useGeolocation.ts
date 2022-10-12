@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import * as Location from "expo-location";
 import { useEffect, useState } from "react";
 import { fetchGeolocationAPI } from "../api/location";
 import {
@@ -10,7 +11,10 @@ const useGeolocation = (): {
   error: unknown;
   isLoading: boolean;
   coords: { latitude: number; longitude: number } | undefined;
+  granted: boolean;
 } => {
+  const [granted, setGranted] = useState(false);
+
   const [wifiAccessPoints, setWifiAccessPoints] = useState<NearbyAccessPoint[]>(
     []
   );
@@ -31,7 +35,11 @@ const useGeolocation = (): {
 
   useEffect(() => {
     (async () => {
-      setWifiAccessPoints(await getNearbyAccessPoints());
+      const result = await Location.requestForegroundPermissionsAsync();
+      setGranted(result.granted);
+      if (result.granted) {
+        setWifiAccessPoints(await getNearbyAccessPoints());
+      }
     })();
   }, []);
 
@@ -42,6 +50,7 @@ const useGeolocation = (): {
       latitude: data.location.lat,
       longitude: data.location.lng,
     },
+    granted,
   };
 };
 
