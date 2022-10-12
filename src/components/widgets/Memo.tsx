@@ -1,3 +1,4 @@
+import { isTablet } from "react-native-device-info";
 import styled from "styled-components/native";
 import useBulletinBoard from "../../hooks/useBulletinBoard";
 import useSpeech from "../../hooks/useSpeech";
@@ -7,7 +8,7 @@ const MemoWidget = () => {
   const [post] = useBulletinBoard();
   useSpeech();
 
-  if (!post) {
+  if (!post || !isTablet()) {
     return null;
   }
 
