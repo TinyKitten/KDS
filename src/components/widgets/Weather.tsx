@@ -40,7 +40,7 @@ const WeatherWidget = () => {
       return "";
     }
     const results = reverseGeocodingRes?.results ?? [];
-    const addrComps = results[0].address_components ?? [];
+    const addrComps = results[0]?.address_components ?? [];
     if (!results.length) {
       return "Unknown";
     }
@@ -88,13 +88,13 @@ const WeatherWidget = () => {
             <UpItemContainer>
               <LowestTempChevron />
               <ValueText>
-                {Math.round(weatherData?.daily[0].temp.min ?? 0)}°
+                {Math.round(weatherData?.daily[0]?.temp.min ?? 0)}°
               </ValueText>
             </UpItemContainer>
             <UpItemContainer>
               <HighestChevron />
               <ValueText>
-                {Math.round(weatherData?.daily[0].temp.max ?? 0)}°
+                {Math.round(weatherData?.daily[0]?.temp.max ?? 0)}°
               </ValueText>
             </UpItemContainer>
           </RowContainer>
