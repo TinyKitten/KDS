@@ -13,12 +13,7 @@ import LowestTempChevron from "../icons/LowestChevron";
 import Wind from "../icons/Wind";
 
 const WeatherWidget = () => {
-  const {
-    error: locationError,
-    isLoading: locationLoading,
-    coords,
-    granted: locationPermissionGranted,
-  } = useGeolocation();
+  const { coords, granted: locationPermissionGranted } = useGeolocation();
   const {
     error: weatherError,
     data: weatherData,
@@ -27,7 +22,7 @@ const WeatherWidget = () => {
     ["oneCallAPI", coords?.latitude, coords?.longitude],
     () => fetchOneCallAPI(coords?.latitude, coords?.longitude),
     {
-      enabled: !locationLoading && !!coords,
+      enabled: !!coords,
       refetchInterval: 1000 * 60 * 30, // 30min
     }
   );
