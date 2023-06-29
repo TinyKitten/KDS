@@ -1,13 +1,9 @@
-import { SUPABASE_KEY, SUPABASE_URL } from "@env";
-import { createClient } from "@supabase/supabase-js";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Tts from "react-native-tts";
 import { fetchDetectLanguage } from "../api/language";
 import { DetectLanguage } from "../models/Language";
-import { SpeechRequestData } from "../models/SpeechRequest";
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+import { supabase } from "../utils/supabase";
 
 const useSpeech = () => {
   const [text, setText] = useState("");
@@ -26,12 +22,19 @@ const useSpeech = () => {
   useEffect(() => {
     (async () => {
       supabase
-        .from<SpeechRequestData>("speechRequest")
-        .on("INSERT", (payload) => {
-          if (payload.new.text.length) {
-            setText(payload.new.text);
+        .channel("any")
+        .on(
+          "broadcast",
+          {
+            event: "speechRequest",
+          },
+          (payload) => {
+            console.debug(payload);
+            // if (payload.text.length) {
+            //   setText(payload.text);
+            // }
           }
-        })
+        )
         .subscribe();
     })();
   }, []);

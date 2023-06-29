@@ -154,6 +154,7 @@ const UpItemContainer = styled.View`
 const DownItemContainer = styled.View`
   flex-direction: row;
   flex: 1;
+  margin-top: 8px;
 `;
 
 const ValueText = styled.Text`

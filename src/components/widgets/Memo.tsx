@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { isTablet } from "react-native-device-info";
 import styled from "styled-components/native";
 import useBulletinBoard from "../../hooks/useBulletinBoard";
@@ -8,7 +9,7 @@ const MemoWidget = () => {
   const [post] = useBulletinBoard();
   useSpeech();
 
-  if (!post || !isTablet()) {
+  if (!post || (!isTablet() && Platform.OS !== "web")) {
     return null;
   }
 
