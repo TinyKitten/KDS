@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import ANALECTS from "../../assets/analects.json";
+import ANALECTS from "../assets/analects.json";
 import Analect from "../models/Analect";
 
 const useAnalect = (): Analect | undefined => {

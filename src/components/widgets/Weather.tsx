@@ -1,31 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import styled from "styled-components/native";
-import { fetchOneCallAPI } from "../../api/owm";
 import useGeolocation from "../../hooks/useGeolocation";
 import useReverseGeocode from "../../hooks/useReverseGeocoding";
-import { OWMOneCallAPIData } from "../../models/OWM";
+import { useWeather } from "../../hooks/useWeather";
 import getRotation from "../../utils/rotation";
 import { textMixin } from "../../utils/textMixin";
-import getWeatherIcon from "../../utils/weatherIcon";
+import { getWeatherIcon } from "../../utils/weatherIcon";
 import HighestChevron from "../icons/HighestChevron";
 import LowestTempChevron from "../icons/LowestChevron";
 import Wind from "../icons/Wind";
 
 const WeatherWidget = () => {
   const { coords, granted: locationPermissionGranted } = useGeolocation();
-  const {
-    error: weatherError,
-    data: weatherData,
-    isLoading: weatherLoading,
-  } = useQuery<OWMOneCallAPIData>(
-    ["oneCallAPI", coords?.latitude, coords?.longitude],
-    () => fetchOneCallAPI(coords?.latitude, coords?.longitude),
-    {
-      enabled: !!coords,
-      refetchInterval: 1000 * 60 * 30, // 30min
-    }
-  );
+  const weather = useWeather(coords?.latitude, coords?.longitude);
+
   const {
     error: reverseGeocodingError,
     isLoading: reverseGeocodingLoading,
@@ -56,7 +44,7 @@ const WeatherWidget = () => {
     return `${city?.short_name}, ${pref?.short_name}`;
   }, [reverseGeocodingLoading, reverseGeocodingError, reverseGeocodingRes]);
 
-  if (weatherLoading) {
+  if (!weather) {
     return (
       <Container>
         <PlaceName>Loading...</PlaceName>
@@ -72,8 +60,8 @@ const WeatherWidget = () => {
     );
   }
 
-  const windRotation = getRotation(weatherData?.current.wind_deg);
-  const weatherIcon = getWeatherIcon(weatherData?.current.weather[0]?.id);
+  const windRotation = getRotation(weather.windDirection);
+  const weatherIcon = getWeatherIcon(weather.weatherCode);
 
   return (
     <Container>
@@ -82,28 +70,24 @@ const WeatherWidget = () => {
         {weatherIcon}
         <ValuesContainer>
           <CurrentTemperature>
-            {Math.round(weatherData?.current.temp ?? 0)}°
+            {Math.round(weather.temperature)}°
           </CurrentTemperature>
           <RowContainer>
             <UpItemContainer>
               <LowestTempChevron />
-              <ValueText>
-                {Math.round(weatherData?.daily[0]?.temp.min ?? 0)}°
-              </ValueText>
+              <ValueText>{Math.round(weather.temperatureMin[0])}°</ValueText>
             </UpItemContainer>
             <UpItemContainer>
               <HighestChevron />
               <ValueText>
-                {Math.round(weatherData?.daily[0]?.temp.max ?? 0)}°
+                {Math.round(weather.temperatureMax[0] ?? 0)}°
               </ValueText>
             </UpItemContainer>
           </RowContainer>
           <RowContainer>
             <DownItemContainer>
               <Wind />
-              <ValueText>
-                {Math.round(weatherData?.current?.wind_speed ?? 0)}
-              </ValueText>
+              <ValueText>{Math.round(weather.windSpeed ?? 0)}</ValueText>
               <ValueUnitText>{windRotation}</ValueUnitText>
             </DownItemContainer>
           </RowContainer>

@@ -1,5 +1,7 @@
 import { registerRootComponent } from "expo";
 import "react-native-url-polyfill/auto";
+import "text-encoding";
+import "./src/polyfill/readAsArrayBuffer";
 
 import App from "./src";
 
