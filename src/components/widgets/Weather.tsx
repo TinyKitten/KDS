@@ -88,7 +88,10 @@ const WeatherWidget = () => {
             <DownItemContainer>
               <Wind />
               <ValueText>{Math.round(weather.windSpeed ?? 0)}</ValueText>
-              <ValueUnitText>{windRotation}</ValueUnitText>
+              <AbsoluteContainer>
+                <SupText>{windRotation}</SupText>
+                <SubText>km/h</SubText>
+              </AbsoluteContainer>
             </DownItemContainer>
           </RowContainer>
         </ValuesContainer>
@@ -140,6 +143,11 @@ const DownItemContainer = styled.View`
   flex: 1;
 `;
 
+const AbsoluteContainer = styled.View`
+  position: relative;
+  margin-left: 2px;
+`;
+
 const ValueText = styled.Text`
   ${textMixin}
   font-size: 16px;
@@ -147,10 +155,19 @@ const ValueText = styled.Text`
   margin-left: 2px;
 `;
 
-const ValueUnitText = styled.Text`
+const SupText = styled.Text`
   ${textMixin}
+  position: absolute;
+  top: 0;
   font-size: 8px;
   line-height: ${19.54 / 2}px;
+`;
+
+const SubText = styled.Text`
+  ${textMixin}
+  position: absolute;
+  bottom: 2px;
+  font-size: 8px;
 `;
 
 export const WeatherWidgetContainer = styled.View`
