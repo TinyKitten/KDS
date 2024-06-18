@@ -5,11 +5,24 @@ import useSpeech from "../../hooks/useSpeech";
 import { textMixin } from "../../utils/textMixin";
 
 const MemoWidget = () => {
-  const [post] = useBulletinBoard();
+  const post = useBulletinBoard();
   useSpeech();
 
-  if (!post || !isTablet()) {
+  if (!isTablet()) {
     return null;
+  }
+
+  if (!post) {
+    return (
+      <Container>
+        <FirstPostTitle numberOfLines={2}>
+          Kitten Digital Signage(KDS)
+        </FirstPostTitle>
+        <FirstPostBody numberOfLines={9}>
+          KDSにようこそ。KDSはタブレット端末で使用できるオープンソースのデジタルサイネージシステムです。専用アプリでこのパネルのテキストを書き換えてメモ帳代わりにできたり、アプリから送信したテキストを読み上げることもできます。
+        </FirstPostBody>
+      </Container>
+    );
   }
 
   return (

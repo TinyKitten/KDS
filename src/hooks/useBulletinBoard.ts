@@ -7,7 +7,7 @@ import { BulletinBoardData } from "../models/BBPost";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const useBulletinBoard = () => {
-  const [posts, setPosts] = useState<BulletinBoardData[]>([]);
+  const [latestPost, setLatestPost] = useState<BulletinBoardData | null>(null);
   const [sound, setSound] = useState<Audio.Sound>();
 
   const playBeep = useCallback(async () => {
@@ -31,36 +31,28 @@ const useBulletinBoard = () => {
       const { data, error } = await supabase
         .from<BulletinBoardData>("bulletinboard")
         .select("*")
+        .limit(1)
         .order("id", { ascending: false });
-      setPosts(data ?? []);
-
-      supabase
-        .from<BulletinBoardData>("bulletinboard")
-        .on("*", (payload) => {
-          switch (payload.eventType) {
-            case "INSERT":
-              setPosts((prev) => [payload.new, ...prev]);
-              break;
-            case "UPDATE":
-              setPosts((prev) =>
-                prev.flatMap((p) =>
-                  p.id === payload.new.id ? payload.new : prev
-                )
-              );
-              break;
-            case "DELETE":
-              setPosts((prev) => prev.filter((p) => p.id !== payload.old.id));
-              break;
-            default:
-              break;
-          }
-          playBeep();
-        })
-        .subscribe();
+      if (error) {
+        console.error(error);
+      }
+      setLatestPost(data?.[0] ?? null);
     })();
+
+    const sub = supabase
+      .from<BulletinBoardData>("bulletinboard")
+      .on("*", (payload) => {
+        playBeep();
+        setLatestPost(payload.new);
+      })
+      .subscribe();
+
+    return () => {
+      sub.unsubscribe();
+    };
   }, []);
 
-  return posts;
+  return latestPost;
 };
 
 export default useBulletinBoard;
