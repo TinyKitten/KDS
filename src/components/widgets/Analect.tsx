@@ -12,10 +12,27 @@ const AnalectWidget = () => {
   return (
     <>
       <AnalectText>“{analect.text}”</AnalectText>
-      <AnalectAuthor>&#x2010;&nbsp;{analect.author}</AnalectAuthor>
+      <AnalectAuthor>
+        <Dash />
+        <AnalectAuthorName>&nbsp;{analect.author}</AnalectAuthorName>
+      </AnalectAuthor>
     </>
   );
 };
+
+const Dash = () => (
+  <DashContainer>
+    <DashText first>&mdash;</DashText>
+    <DashText>&mdash;</DashText>
+  </DashContainer>
+);
+
+const DashContainer = styled.View`
+  flex-direction: row;
+`;
+const DashText = styled.Text<{ first?: boolean }>`
+  margin-left: ${({ first }) => (first ? "0px" : "-3px")};
+`;
 
 export const AnalectWidgetContainer = styled.View`
   position: absolute;
@@ -32,10 +49,15 @@ const AnalectText = styled.Text`
   font-size: 21px;
   line-height: 26px;
 `;
-const AnalectAuthor = styled.Text`
+const AnalectAuthor = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const AnalectAuthorName = styled.Text`
   ${textMixin}
   font-weight: 600;
   font-size: 16px;
-  text-align: right;
   line-height: 24px;
 `;

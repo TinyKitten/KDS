@@ -6,12 +6,16 @@ import Snow from "../components/icons/Snow";
 import Sunny from "../components/icons/Sunny";
 import Thunderstorm from "../components/icons/Thunderstorm";
 
-export const getWeatherIcon = (id: number | undefined) => {
-  if (!id) {
+type Props = {
+  weatherCode: number;
+};
+
+export const WeatherIcon = ({ weatherCode }: Props) => {
+  if (!weatherCode) {
     return null;
   }
   // https://open-meteo.com/en/docs
-  switch (id) {
+  switch (weatherCode) {
     case 0:
     case 1:
       return <Sunny />;
@@ -20,7 +24,7 @@ export const getWeatherIcon = (id: number | undefined) => {
       return <Cloudy />;
     case 45:
     case 48:
-      <Foggy />;
+      return <Foggy />;
     case 51:
     case 53:
     case 55:
@@ -47,5 +51,7 @@ export const getWeatherIcon = (id: number | undefined) => {
     case 96:
     case 99:
       return <Thunderstorm />;
+    default:
+      return null;
   }
 };

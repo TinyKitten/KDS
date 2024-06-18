@@ -5,7 +5,7 @@ import useReverseGeocode from "../../hooks/useReverseGeocoding";
 import { useWeather } from "../../hooks/useWeather";
 import getRotation from "../../utils/rotation";
 import { textMixin } from "../../utils/textMixin";
-import { getWeatherIcon } from "../../utils/weatherIcon";
+import { WeatherIcon } from "../WeatherIcon";
 import HighestChevron from "../icons/HighestChevron";
 import LowestTempChevron from "../icons/LowestChevron";
 import Wind from "../icons/Wind";
@@ -61,13 +61,14 @@ const WeatherWidget = () => {
   }
 
   const windRotation = getRotation(weather.windDirection);
-  const weatherIcon = getWeatherIcon(weather.weatherCode);
 
   return (
     <Container>
       <PlaceName>{placeName}</PlaceName>
       <ConditionContainer>
-        {weatherIcon}
+        <WeatherIconContainer>
+          <WeatherIcon weatherCode={weather.weatherCode} />
+        </WeatherIconContainer>
         <ValuesContainer>
           <CurrentTemperature>
             {Math.round(weather.temperature)}°
@@ -100,19 +101,30 @@ const WeatherWidget = () => {
   );
 };
 
-const Container = styled.View``;
+const Container = styled.View`
+  width: 256px;
+  display: flex;
+  align-items: flex-end;
+`;
 
 const PlaceName = styled.Text`
   ${textMixin}
   font-size: 20px;
   font-weight: 700;
   line-height: 24.42px;
-  margin-bottom: 10px;
 `;
 
 const ConditionContainer = styled.View`
   display: flex;
   flex-direction: row;
+`;
+
+const WeatherIconContainer = styled.View`
+  width: 100%;
+  height: 100%;
+  max-width: 64px;
+  max-height: 64px;
+  margin-top: 8px;
 `;
 
 const ValuesContainer = styled.View`
