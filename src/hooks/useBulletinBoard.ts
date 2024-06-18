@@ -41,7 +41,7 @@ const useBulletinBoard = () => {
 
     const sub = supabase
       .from<BulletinBoardData>("bulletinboard")
-      .on("*", (payload) => {
+      .on("INSERT", (payload) => {
         playBeep();
         setLatestPost(payload.new);
       })
