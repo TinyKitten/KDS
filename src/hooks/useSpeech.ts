@@ -6,6 +6,7 @@ import Tts from "react-native-tts";
 import { fetchDetectLanguage } from "../api/language";
 import { DetectLanguage } from "../models/Language";
 import { SpeechRequestData } from "../models/SpeechRequest";
+import { playBeep } from "../utils/beep";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -24,16 +25,19 @@ const useSpeech = () => {
   );
 
   useEffect(() => {
-    (async () => {
-      supabase
-        .from<SpeechRequestData>("speechRequest")
-        .on("INSERT", (payload) => {
-          if (payload.new.text.length) {
-            setText(payload.new.text);
-          }
-        })
-        .subscribe();
-    })();
+    const sub = supabase
+      .from<SpeechRequestData>("speechRequest")
+      .on("INSERT", async (payload) => {
+        if (payload.new.text.length) {
+          await playBeep();
+          setText(payload.new.text);
+        }
+      })
+      .subscribe();
+
+    return () => {
+      sub.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {

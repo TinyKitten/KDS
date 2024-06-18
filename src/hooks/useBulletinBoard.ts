@@ -1,30 +1,13 @@
 import { SUPABASE_KEY, SUPABASE_URL } from "@env";
 import { createClient } from "@supabase/supabase-js";
-import { Audio } from "expo-av";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BulletinBoardData } from "../models/BBPost";
+import { playBeep } from "../utils/beep";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const useBulletinBoard = () => {
   const [latestPost, setLatestPost] = useState<BulletinBoardData | null>(null);
-  const [sound, setSound] = useState<Audio.Sound>();
-
-  const playBeep = useCallback(async () => {
-    const { sound } = await Audio.Sound.createAsync(
-      require("../assets/beep.mp3")
-    );
-    setSound(sound);
-    await sound.playAsync();
-  }, []);
-
-  useEffect(() => {
-    return sound
-      ? () => {
-          sound.unloadAsync();
-        }
-      : undefined;
-  }, [sound]);
 
   useEffect(() => {
     (async () => {
@@ -41,7 +24,8 @@ const useBulletinBoard = () => {
 
     const sub = supabase
       .from<BulletinBoardData>("bulletinboard")
-      .on("INSERT", (payload) => {
+      .on("INSERT", async (payload) => {
+        // NOTE: ビープ音再生終了まで待つ意味はない
         playBeep();
         setLatestPost(payload.new);
       })
