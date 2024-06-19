@@ -11,9 +11,6 @@ type Props = {
 };
 
 export const WeatherIcon = ({ weatherCode }: Props) => {
-  if (!weatherCode) {
-    return null;
-  }
   // https://open-meteo.com/en/docs
   switch (weatherCode) {
     case 0:
