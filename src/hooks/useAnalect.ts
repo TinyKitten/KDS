@@ -6,7 +6,7 @@ const useAnalect = (): Analect | undefined => {
   const [analect, setAnalect] = useState<Analect>();
 
   const updateAnalect = useCallback(() => {
-    const rand = Math.floor(Math.random() * ANALECTS.length);
+    const rand = Math.floor(Math.random() * (ANALECTS.length - 1));
     setAnalect(ANALECTS[rand]);
   }, []);
 
