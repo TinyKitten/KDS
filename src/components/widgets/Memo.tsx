@@ -1,8 +1,13 @@
+import { Dimensions } from "react-native";
 import { isTablet } from "react-native-device-info";
 import styled from "styled-components/native";
 import useBulletinBoard from "../../hooks/useBulletinBoard";
 import useSpeech from "../../hooks/useSpeech";
 import { textMixin } from "../../utils/textMixin";
+
+const windowHeight = Dimensions.get("window").height;
+const fullPostBodyHeight = windowHeight / 24;
+const postBodyHeightNumberOfLines = fullPostBodyHeight / 4;
 
 const MemoWidget = () => {
   const post = useBulletinBoard();
@@ -15,20 +20,20 @@ const MemoWidget = () => {
   if (!post) {
     return (
       <Container>
-        <FirstPostTitle numberOfLines={2}>
-          Kitten Digital Signage(KDS)
-        </FirstPostTitle>
-        <FirstPostBody numberOfLines={9}>
+        <PostTitle numberOfLines={1}>Kitten Digital Signage(KDS)</PostTitle>
+        <PostBody numberOfLines={postBodyHeightNumberOfLines}>
           KDSにようこそ。KDSはタブレット端末で使用できるオープンソースのデジタルサイネージシステムです。専用アプリでこのパネルのテキストを書き換えてメモ帳代わりにできたり、アプリから送信したテキストを読み上げることもできます。
-        </FirstPostBody>
+        </PostBody>
       </Container>
     );
   }
 
   return (
     <Container>
-      <FirstPostTitle numberOfLines={2}>{post.heading}</FirstPostTitle>
-      <FirstPostBody numberOfLines={9}>{post.text}</FirstPostBody>
+      <PostTitle numberOfLines={1}>{post.heading}</PostTitle>
+      <PostBody numberOfLines={postBodyHeightNumberOfLines}>
+        {post.text}
+      </PostBody>
     </Container>
   );
 };
@@ -36,15 +41,19 @@ const MemoWidget = () => {
 export const MemoWidgetContainer = styled.View`
   position: absolute;
   top: 25%;
+  padding-right: 150px;
 `;
 
-const Container = styled.View``;
+const Container = styled.View`
+  height: 100%;
+`;
 
-const FirstPostTitle = styled.Text`
+const PostTitle = styled.Text`
   ${textMixin}
   font-size: 32px;
 `;
-const FirstPostBody = styled.Text`
+
+const PostBody = styled.Text`
   ${textMixin}
   font-size: 24px;
 `;

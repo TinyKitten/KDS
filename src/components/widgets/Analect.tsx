@@ -11,7 +11,9 @@ const AnalectWidget = () => {
 
   return (
     <>
-      <AnalectText>“{analect.text}”</AnalectText>
+      <AnalectText numberOfLines={2} adjustsFontSizeToFit>
+        “{analect.text}”
+      </AnalectText>
       <AnalectAuthor>
         <Dash />
         <AnalectAuthorName>&nbsp;{analect.author}</AnalectAuthorName>
