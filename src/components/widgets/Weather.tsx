@@ -12,7 +12,7 @@ import Wind from "../icons/Wind";
 
 const WeatherWidget = () => {
   const { coords, granted: locationPermissionGranted } = useCurrentPosition();
-  const weather = useWeather(coords?.latitude, coords?.longitude);
+  const { data: weather } = useWeather(coords?.latitude, coords?.longitude);
 
   const {
     error: reverseGeocodingError,
