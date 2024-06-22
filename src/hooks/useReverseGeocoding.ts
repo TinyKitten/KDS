@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchReverseGeocodeAPI } from "../api/location";
+import { reverseGeocodeFetcher } from "../api/location";
 import { ReverseGeocode } from "../models/RevserseGeocode";
 
-const useReverseGeocode = (
+export const useReverseGeocoding = (
   latitude: number | undefined,
   longitude: number | undefined
 ): {
@@ -12,7 +12,7 @@ const useReverseGeocode = (
 } => {
   const { error, data, isLoading } = useQuery<ReverseGeocode>(
     ["reverseGeocode", latitude, longitude],
-    () => fetchReverseGeocodeAPI(latitude ?? 0, longitude ?? 0),
+    () => reverseGeocodeFetcher(latitude ?? 0, longitude ?? 0),
     { enabled: !!latitude && !!longitude }
   );
 
@@ -22,5 +22,3 @@ const useReverseGeocode = (
     data,
   };
 };
-
-export default useReverseGeocode;

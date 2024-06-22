@@ -1,6 +1,6 @@
 import { GOOGLE_CLOUD_API_KEY } from "@env";
 
-export const fetchReverseGeocodeAPI = async (
+export const reverseGeocodeFetcher = async (
   latitude: number,
   longitude: number
 ) => {

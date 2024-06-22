@@ -2,7 +2,7 @@ import * as Location from "expo-location";
 import { LocationObjectCoords } from "expo-location";
 import { useEffect, useState } from "react";
 
-const useGeolocation = (): {
+export const useCurrentPosition = (): {
   coords: LocationObjectCoords | undefined;
   granted: boolean;
 } => {
@@ -24,5 +24,3 @@ const useGeolocation = (): {
     granted,
   };
 };
-
-export default useGeolocation;

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import styled from "styled-components/native";
-import useGeolocation from "../../hooks/useGeolocation";
-import useReverseGeocode from "../../hooks/useReverseGeocoding";
+import { useCurrentPosition } from "../../hooks/useCurrentPosition";
+import { useReverseGeocoding } from "../../hooks/useReverseGeocoding";
 import { useWeather } from "../../hooks/useWeather";
 import getRotation from "../../utils/rotation";
 import { textMixin } from "../../utils/textMixin";
@@ -11,14 +11,14 @@ import LowestTempChevron from "../icons/LowestChevron";
 import Wind from "../icons/Wind";
 
 const WeatherWidget = () => {
-  const { coords, granted: locationPermissionGranted } = useGeolocation();
+  const { coords, granted: locationPermissionGranted } = useCurrentPosition();
   const weather = useWeather(coords?.latitude, coords?.longitude);
 
   const {
     error: reverseGeocodingError,
     isLoading: reverseGeocodingLoading,
     data: reverseGeocodingRes,
-  } = useReverseGeocode(coords?.latitude, coords?.longitude);
+  } = useReverseGeocoding(coords?.latitude, coords?.longitude);
 
   const placeName = useMemo(() => {
     if (reverseGeocodingLoading) {
