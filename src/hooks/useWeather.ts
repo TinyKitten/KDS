@@ -13,7 +13,7 @@ export const useWeather = (
   const { error, data, isLoading } = useQuery<WeatherData | undefined>(
     ["weather", latitude, longitude],
     () => weatherFetcher(latitude ?? 0, longitude ?? 0),
-    { enabled: !!latitude && !!longitude, refetchInterval: 30 * 60 * 1000 }
+    { enabled: !!latitude && !!longitude, refetchInterval: 10 * 60 * 1000 }
   );
 
   return {
