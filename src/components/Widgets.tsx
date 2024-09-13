@@ -13,7 +13,7 @@ import useDarkMode from "../hooks/useDarkMode";
 
 export default function Widgets() {
   useKeepAwake();
-  const { latestPost, qrText } = useBulletinBoard();
+  const { latestPost } = useBulletinBoard();
   const isDarkMode = useDarkMode();
 
   return (
@@ -22,13 +22,13 @@ export default function Widgets() {
         <ClockWidget />
       </ClockWidgetContainer>
       <CreditWidgetContainer>
-        {qrText ? (
+        {latestPost?.qr_text ? (
           <QRCodeContainer>
             <QRCode
               size={72}
               backgroundColor={isDarkMode ? "#000" : "#fff"}
               color={isDarkMode ? "#fff" : "#000"}
-              value={qrText}
+              value={latestPost.qr_text}
             />
           </QRCodeContainer>
         ) : null}
