@@ -1,11 +1,12 @@
 import React from "react";
+import { Appearance } from "react-native";
 import { Path, Svg } from "react-native-svg";
 
 const HighestChevron = () => (
   <Svg width="12" height="8" viewBox="0 0 12 8" fill="none">
     <Path
       d="M1.075 7.075L0 6L6 0L12 5.975L10.925 7.05L6 2.125L1.075 7.075Z"
-      fill="#000"
+      fill={Appearance.getColorScheme() === "dark" ? "#fff" : "#000"}
     />
   </Svg>
 );
