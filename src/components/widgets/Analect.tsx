@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import useAnalect from "../../hooks/useAnalect";
-import { textMixin } from "../../utils/textMixin";
+import { TypographyBase } from "../TypographyBase";
 
 const AnalectWidget = () => {
   const analect = useAnalect();
@@ -32,21 +32,13 @@ const Dash = () => (
 const DashContainer = styled.View`
   flex-direction: row;
 `;
-const DashText = styled.Text<{ first?: boolean }>`
+const DashText = styled(TypographyBase)<{ first?: boolean }>`
   margin-left: ${({ first }) => (first ? "0px" : "-3px")};
-`;
-
-export const AnalectWidgetContainer = styled.View`
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  padding-right: 150px;
 `;
 
 export default AnalectWidget;
 
-const AnalectText = styled.Text`
-  ${textMixin}
+const AnalectText = styled(TypographyBase)`
   font-weight: 600;
   font-size: 21px;
   line-height: 26px;
@@ -57,8 +49,7 @@ const AnalectAuthor = styled.View`
   justify-content: flex-end;
 `;
 
-const AnalectAuthorName = styled.Text`
-  ${textMixin}
+const AnalectAuthorName = styled(TypographyBase)`
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;

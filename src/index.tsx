@@ -1,15 +1,16 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StatusBar } from "expo-status-bar";
-import { Appearance } from "react-native";
 import styled from "styled-components/native";
 import Widgets from "./components/Widgets";
+import useDarkMode from "./hooks/useDarkMode";
 
 const queryClient = new QueryClient();
 
 export default function App() {
+  const isDarkMode = useDarkMode();
   return (
     <QueryClientProvider client={queryClient}>
-      <RootContainer>
+      <RootContainer style={{ backgroundColor: isDarkMode ? "#000" : "#fff" }}>
         <Widgets />
         <StatusBar hidden />
       </RootContainer>
@@ -19,6 +20,5 @@ export default function App() {
 
 const RootContainer = styled.View`
   flex: 1;
-  background-color: ${Appearance.getColorScheme() === "dark" ? "#000" : "#fff"};
   padding: 50px;
 `;

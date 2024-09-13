@@ -1,18 +1,22 @@
 import { useMemo } from "react";
 import styled from "styled-components/native";
 import { useCurrentPosition } from "../../hooks/useCurrentPosition";
+import useDarkMode from "../../hooks/useDarkMode";
 import { useReverseGeocoding } from "../../hooks/useReverseGeocoding";
 import { useWeather } from "../../hooks/useWeather";
 import getRotation from "../../utils/rotation";
-import { textMixin } from "../../utils/textMixin";
-import { WeatherIcon } from "../WeatherIcon";
 import HighestChevron from "../icons/HighestChevron";
 import LowestTempChevron from "../icons/LowestChevron";
 import Wind from "../icons/Wind";
+import { TypographyBase } from "../TypographyBase";
+import { WeatherIcon } from "../WeatherIcon";
 
 const WeatherWidget = () => {
   const { coords, granted: locationPermissionGranted } = useCurrentPosition();
   const { data: weather } = useWeather(coords?.latitude, coords?.longitude);
+  const isDarkMode = useDarkMode();
+
+  const fill = isDarkMode ? "#fff" : "#000";
 
   const {
     error: reverseGeocodingError,
@@ -75,11 +79,11 @@ const WeatherWidget = () => {
           </CurrentTemperature>
           <RowContainer>
             <UpItemContainer>
-              <LowestTempChevron />
+              <LowestTempChevron fill={fill} />
               <ValueText>{Math.round(weather.temperatureMin[0])}°</ValueText>
             </UpItemContainer>
             <UpItemContainer>
-              <HighestChevron />
+              <HighestChevron fill={fill} />
               <ValueText>
                 {Math.round(weather.temperatureMax[0] ?? 0)}°
               </ValueText>
@@ -87,7 +91,7 @@ const WeatherWidget = () => {
           </RowContainer>
           <RowContainer>
             <DownItemContainer>
-              <Wind />
+              <Wind fill={fill} />
               <ValueText>{Math.round(weather.windSpeed ?? 0)}</ValueText>
               <AbsoluteContainer>
                 <SupText>{windRotation}</SupText>
@@ -107,8 +111,7 @@ const Container = styled.View`
   align-items: flex-end;
 `;
 
-const PlaceName = styled.Text`
-  ${textMixin}
+const PlaceName = styled(TypographyBase)`
   font-size: 20px;
   font-weight: 700;
   line-height: 24.42px;
@@ -132,8 +135,7 @@ const ValuesContainer = styled.View`
   margin-left: 20px;
 `;
 
-const CurrentTemperature = styled.Text`
-  ${textMixin}
+const CurrentTemperature = styled(TypographyBase)`
   font-size: 64px;
   line-height: 78.14px;
   font-weight: 500;
@@ -160,23 +162,20 @@ const AbsoluteContainer = styled.View`
   margin-left: 2px;
 `;
 
-const ValueText = styled.Text`
-  ${textMixin}
+const ValueText = styled(TypographyBase)`
   font-size: 16px;
   line-height: 19.54px;
   margin-left: 2px;
 `;
 
-const SupText = styled.Text`
-  ${textMixin}
+const SupText = styled(TypographyBase)`
   position: absolute;
   top: 0;
   font-size: 8px;
   line-height: ${19.54 / 2}px;
 `;
 
-const SubText = styled.Text`
-  ${textMixin}
+const SubText = styled(TypographyBase)`
   position: absolute;
   bottom: 2px;
   font-size: 8px;
