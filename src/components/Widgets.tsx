@@ -1,10 +1,9 @@
 import { useKeepAwake } from "expo-keep-awake";
+import { Dimensions } from "react-native";
 import { isTablet } from "react-native-device-info";
-import QRCode from "react-native-qrcode-svg";
 import styled from "styled-components/native";
 import AnalectWidget from "../components/widgets/Analect";
 import ClockWidget, { ClockWidgetContainer } from "../components/widgets/Clock";
-import Credit, { CreditWidgetContainer } from "../components/widgets/Credit";
 import MemoWidget, { MemoWidgetContainer } from "../components/widgets/Memo";
 import WeatherWidget, {
   WeatherWidgetContainer,
@@ -12,7 +11,7 @@ import WeatherWidget, {
 import useBulletinBoard from "../hooks/useBulletinBoard";
 import useDarkMode from "../hooks/useDarkMode";
 
-const isSP = !isTablet();
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 export default function Widgets() {
   useKeepAwake();
@@ -21,52 +20,52 @@ export default function Widgets() {
 
   return (
     <WidgetsContainer>
-      <ClockWidgetContainer>
-        <ClockWidget />
-      </ClockWidgetContainer>
-      <CreditWidgetContainer>
-        {latestPost?.qr_text ? (
-          <QRCodeContainer>
-            <QRCode
-              size={isSP ? 48 : 72}
-              backgroundColor={isDarkMode ? "#000" : "#fff"}
-              color={isDarkMode ? "#fff" : "#000"}
-              value={latestPost.qr_text}
-            />
-          </QRCodeContainer>
-        ) : null}
+      <TopWidgetContainer>
+        <ClockWidgetContainer>
+          <ClockWidget />
+        </ClockWidgetContainer>
+        <WeatherWidgetContainer>
+          <WeatherWidget />
+        </WeatherWidgetContainer>
+      </TopWidgetContainer>
 
-        <Credit />
-      </CreditWidgetContainer>
-      {!isSP ? (
+      <MemoWidgetContainer>
+        <MemoWidget latestPost={latestPost} />
+      </MemoWidgetContainer>
+
+      {isTablet() ? (
         <BottomWidgetContainer>
           <AnalectWidget />
         </BottomWidgetContainer>
       ) : null}
-      <WeatherWidgetContainer>
-        <WeatherWidget />
-      </WeatherWidgetContainer>
-      <MemoWidgetContainer>
-        <MemoWidget latestPost={latestPost} />
-      </MemoWidgetContainer>
+
+      {/* {latestPost?.qr_text ? (
+        <QRCodeContainer>
+          <QRCode
+            size={64}
+            backgroundColor="transparent"
+            color={isDarkMode ? "#fff" : "#000"}
+            value={latestPost.qr_text}
+          />
+        </QRCodeContainer>
+      ) : null} */}
     </WidgetsContainer>
   );
 }
 
 const WidgetsContainer = styled.View`
-  position: relative;
-  flex: 1;
+  width: ${windowWidth - (isTablet() ? 96 : 64)}px;
+  height: ${windowHeight - (isTablet() ? 96 : 64)}px;
+`;
+
+const TopWidgetContainer = styled.View`
+  display: flex;
+  height: 96px;
+  overflow: hidden;
+  flex-shrink: 0;
+  flex-direction: row;
 `;
 
 const BottomWidgetContainer = styled.View`
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  padding-right: 150px;
-`;
-
-const QRCodeContainer = styled.View`
-  flex-direction: column;
-  align-items: center;
-  top: ${isSP ? "16px" : 0};
+  height: 72px;
 `;

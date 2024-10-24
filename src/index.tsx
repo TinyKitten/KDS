@@ -19,6 +19,7 @@ export default function App() {
 }
 
 const RootContainer = styled.View`
+  justify-content: center;
+  align-items: center;
   flex: 1;
-  padding: 50px;
 `;

@@ -19,12 +19,12 @@ const ClockWidget = () => {
 export default ClockWidget;
 
 export const ClockWidgetContainer = styled.View`
-  position: absolute;
-  left: 0;
-  top: 0;
+  flex: 1;
 `;
 
-const Container = styled.View``;
+const Container = styled.View`
+  height: 100%;
+`;
 
 const DateText = styled(TypographyBase)`
   font-weight: 500;

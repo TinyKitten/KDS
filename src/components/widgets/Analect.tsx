@@ -10,15 +10,13 @@ const AnalectWidget = () => {
   }
 
   return (
-    <>
-      <AnalectText numberOfLines={2} adjustsFontSizeToFit>
-        “{analect.text}”
-      </AnalectText>
+    <Container>
+      <AnalectText>“{analect.text}”</AnalectText>
       <AnalectAuthor>
         <Dash />
         <AnalectAuthorName>&nbsp;{analect.author}</AnalectAuthorName>
       </AnalectAuthor>
-    </>
+    </Container>
   );
 };
 
@@ -38,10 +36,14 @@ const DashText = styled(TypographyBase)<{ first?: boolean }>`
 
 export default AnalectWidget;
 
+const Container = styled.View`
+  flex: 1;
+  justify-content: flex-end;
+`;
+
 const AnalectText = styled(TypographyBase)`
   font-weight: 600;
-  font-size: 21px;
-  line-height: 26px;
+  font-size: 20px;
 `;
 const AnalectAuthor = styled.View`
   flex-direction: row;
@@ -52,5 +54,4 @@ const AnalectAuthor = styled.View`
 const AnalectAuthorName = styled(TypographyBase)`
   font-weight: 600;
   font-size: 16px;
-  line-height: 24px;
 `;

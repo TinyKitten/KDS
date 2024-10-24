@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { isTablet } from "react-native-device-info";
 import styled from "styled-components/native";
 import { useCurrentPosition } from "../../hooks/useCurrentPosition";
 import useDarkMode from "../../hooks/useDarkMode";
@@ -70,34 +71,36 @@ const WeatherWidget = () => {
     <Container>
       <PlaceName>{placeName}</PlaceName>
       <ConditionContainer>
-        <WeatherIconContainer>
-          <WeatherIcon weatherCode={weather.weatherCode} />
-        </WeatherIconContainer>
-        <ValuesContainer>
+        <CurrentContainer>
+          <WeatherIconContainer>
+            <WeatherIcon weatherCode={weather.weatherCode} />
+          </WeatherIconContainer>
           <CurrentTemperature>
             {Math.round(weather.temperature)}°
           </CurrentTemperature>
+        </CurrentContainer>
+        <ValuesContainer>
           <RowContainer>
-            <UpItemContainer>
+            <ValueContainer>
               <LowestTempChevron fill={fill} />
               <ValueText>{Math.round(weather.temperatureMin[0])}°</ValueText>
-            </UpItemContainer>
-            <UpItemContainer>
+            </ValueContainer>
+            <ValueContainer>
               <HighestChevron fill={fill} />
               <ValueText>
                 {Math.round(weather.temperatureMax[0] ?? 0)}°
               </ValueText>
-            </UpItemContainer>
+            </ValueContainer>
           </RowContainer>
           <RowContainer>
-            <DownItemContainer>
+            <ValueContainer>
               <Wind fill={fill} />
               <ValueText>{Math.round(weather.windSpeed ?? 0)}</ValueText>
-              <AbsoluteContainer>
-                <SupText>{windRotation}</SupText>
-                <SubText>km/h</SubText>
-              </AbsoluteContainer>
-            </DownItemContainer>
+            </ValueContainer>
+            <ValueContainer column>
+              <TinyText>{windRotation}</TinyText>
+              <TinyText>km/h</TinyText>
+            </ValueContainer>
           </RowContainer>
         </ValuesContainer>
       </ConditionContainer>
@@ -106,85 +109,70 @@ const WeatherWidget = () => {
 };
 
 const Container = styled.View`
-  width: 256px;
-  display: flex;
-  align-items: flex-end;
+  height: 100%;
+  align-self: flex-end;
 `;
 
 const PlaceName = styled(TypographyBase)`
-  font-size: 20px;
+  font-size: ${isTablet() ? 24 : 16}px;
+  line-height: ${isTablet() ? 24 : 16}px;
   font-weight: 700;
-  line-height: 24.42px;
+  text-align: right;
 `;
 
 const ConditionContainer = styled.View`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: ${isTablet() ? 8 : 4}px;
 `;
 
 const WeatherIconContainer = styled.View`
   width: 100%;
   height: 100%;
-  max-width: 64px;
-  max-height: 64px;
-  margin-top: 8px;
-`;
-
-const ValuesContainer = styled.View`
-  flex-direction: column;
-  margin-left: 20px;
+  max-width: 48px;
+  max-height: 48px;
 `;
 
 const CurrentTemperature = styled(TypographyBase)`
-  font-size: 64px;
-  line-height: 78.14px;
-  font-weight: 500;
+  font-size: 48px;
+  font-weight: 600;
+`;
+
+const ValuesContainer = styled.View`
+  gap: ${isTablet() ? 0 : 4}px;
 `;
 
 const RowContainer = styled.View`
   flex-direction: row;
-  flex: 1;
 `;
 
-const UpItemContainer = styled.View`
+const CurrentContainer = styled.View`
+  display: flex;
   flex-direction: row;
   align-items: center;
-  flex: 1;
+  gap: 8px;
 `;
 
-const DownItemContainer = styled.View`
-  flex-direction: row;
-  flex: 1;
-`;
-
-const AbsoluteContainer = styled.View`
-  position: relative;
-  margin-left: 2px;
+const ValueContainer = styled.View<{ column?: boolean }>`
+  flex-direction: ${({ column }) => (column ? "column" : "row")};
+  align-items: ${({ column }) => (column ? "flex-start" : "center")};
 `;
 
 const ValueText = styled(TypographyBase)`
   font-size: 16px;
-  line-height: 19.54px;
+  line-height: 16px;
+  margin-left: 4px;
+`;
+
+const TinyText = styled(TypographyBase)`
+  font-size: 8px;
+  line-height: 8px;
   margin-left: 2px;
 `;
 
-const SupText = styled(TypographyBase)`
-  position: absolute;
-  top: 0;
-  font-size: 8px;
-  line-height: ${19.54 / 2}px;
-`;
-
-const SubText = styled(TypographyBase)`
-  position: absolute;
-  bottom: 2px;
-  font-size: 8px;
-`;
-
 export const WeatherWidgetContainer = styled.View`
-  position: absolute;
-  top: 0;
-  right: 0;
+  flex: 1;
 `;
 
 export default WeatherWidget;
