@@ -37,7 +37,7 @@ const DashText = styled(TypographyBase)<{ first?: boolean }>`
 export default AnalectWidget;
 
 const Container = styled.View`
-  flex: 1;
+  width: 100%;
   justify-content: flex-end;
 `;
 
@@ -54,4 +54,8 @@ const AnalectAuthor = styled.View`
 const AnalectAuthorName = styled(TypographyBase)`
   font-weight: 600;
   font-size: 16px;
+`;
+
+export const AnalectWidgetContainer = styled.View`
+  flex: 1;
 `;

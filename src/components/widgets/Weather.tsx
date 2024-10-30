@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { isTablet } from "react-native-device-info";
 import styled from "styled-components/native";
 import { useCurrentPosition } from "../../hooks/useCurrentPosition";
 import useDarkMode from "../../hooks/useDarkMode";
@@ -109,13 +108,12 @@ const WeatherWidget = () => {
 };
 
 const Container = styled.View`
-  height: 100%;
   align-self: flex-end;
+  height: 72px;
 `;
 
 const PlaceName = styled(TypographyBase)`
-  font-size: ${isTablet() ? 24 : 16}px;
-  line-height: ${isTablet() ? 24 : 16}px;
+  font-size: 16px;
   font-weight: 700;
   text-align: right;
 `;
@@ -124,14 +122,13 @@ const ConditionContainer = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: ${isTablet() ? 8 : 4}px;
+  justify-content: center;
+  gap: 4px;
 `;
 
 const WeatherIconContainer = styled.View`
-  width: 100%;
-  height: 100%;
-  max-width: 48px;
-  max-height: 48px;
+  width: 48px;
+  height: 48px;
 `;
 
 const CurrentTemperature = styled(TypographyBase)`
@@ -139,9 +136,7 @@ const CurrentTemperature = styled(TypographyBase)`
   font-weight: 600;
 `;
 
-const ValuesContainer = styled.View`
-  gap: ${isTablet() ? 0 : 4}px;
-`;
+const ValuesContainer = styled.View``;
 
 const RowContainer = styled.View`
   flex-direction: row;
@@ -151,28 +146,27 @@ const CurrentContainer = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 8px;
 `;
 
 const ValueContainer = styled.View<{ column?: boolean }>`
   flex-direction: ${({ column }) => (column ? "column" : "row")};
   align-items: ${({ column }) => (column ? "flex-start" : "center")};
+  justify-content: center;
 `;
 
 const ValueText = styled(TypographyBase)`
   font-size: 16px;
-  line-height: 16px;
   margin-left: 4px;
 `;
 
 const TinyText = styled(TypographyBase)`
   font-size: 8px;
-  line-height: 8px;
   margin-left: 2px;
+  line-height: 8px;
 `;
 
-export const WeatherWidgetContainer = styled.View`
-  flex: 1;
-`;
+export const WeatherWidgetContainer = styled.View``;
 
 export default WeatherWidget;

@@ -1,13 +1,21 @@
-import styled from "styled-components/native";
+import { Text, TextProps } from "react-native";
 import useDarkMode from "../hooks/useDarkMode";
 
-const Typography = styled.Text<{ isDarkMode: boolean }>`
-  color: ${({ isDarkMode }) => (isDarkMode ? "#fff" : "#000")};
-  font-weight: bold;
-`;
-
-// TODO: anyはダサいぞ
-export const TypographyBase = (props: any) => {
+export const TypographyBase = (props: TextProps) => {
   const isDarkMode = useDarkMode();
-  return <Typography isDarkMode={isDarkMode} {...props} />;
+
+  return (
+    <Text
+      {...props}
+      style={[
+        {
+          color: isDarkMode ? "#fff" : "#000",
+          fontWeight: "bold",
+          includeFontPadding: false,
+          textAlignVertical: "center",
+        },
+        props.style,
+      ]}
+    />
+  );
 };

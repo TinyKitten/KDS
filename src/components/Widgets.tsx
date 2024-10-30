@@ -1,8 +1,8 @@
 import { useKeepAwake } from "expo-keep-awake";
 import { Dimensions } from "react-native";
 import { isTablet } from "react-native-device-info";
+import QRCode from "react-native-qrcode-svg";
 import styled from "styled-components/native";
-import AnalectWidget from "../components/widgets/Analect";
 import ClockWidget, { ClockWidgetContainer } from "../components/widgets/Clock";
 import MemoWidget, { MemoWidgetContainer } from "../components/widgets/Memo";
 import WeatherWidget, {
@@ -10,6 +10,7 @@ import WeatherWidget, {
 } from "../components/widgets/Weather";
 import useBulletinBoard from "../hooks/useBulletinBoard";
 import useDarkMode from "../hooks/useDarkMode";
+import Credit, { CreditWidgetContainer } from "./widgets/Credit";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
@@ -33,22 +34,19 @@ export default function Widgets() {
         <MemoWidget latestPost={latestPost} />
       </MemoWidgetContainer>
 
-      {isTablet() ? (
-        <BottomWidgetContainer>
-          <AnalectWidget />
-        </BottomWidgetContainer>
-      ) : null}
-
-      {/* {latestPost?.qr_text ? (
-        <QRCodeContainer>
+      <BottomWidgetContainer>
+        {latestPost?.qr_text ? (
           <QRCode
-            size={64}
+            size={isTablet() ? 64 : 48}
             backgroundColor="transparent"
             color={isDarkMode ? "#fff" : "#000"}
             value={latestPost.qr_text}
           />
-        </QRCodeContainer>
-      ) : null} */}
+        ) : null}
+        <CreditWidgetContainer>
+          <Credit />
+        </CreditWidgetContainer>
+      </BottomWidgetContainer>
     </WidgetsContainer>
   );
 }
@@ -60,12 +58,16 @@ const WidgetsContainer = styled.View`
 
 const TopWidgetContainer = styled.View`
   display: flex;
-  height: 96px;
   overflow: hidden;
   flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
   flex-direction: row;
 `;
 
 const BottomWidgetContainer = styled.View`
-  height: 72px;
+  height: ${isTablet() ? 64 : 48}px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;

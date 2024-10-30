@@ -1,29 +1,25 @@
 import React from "react";
 import styled from "styled-components/native";
 import useClock from "../../hooks/useClock";
-import useDarkMode from "../../hooks/useDarkMode";
 import { TypographyBase } from "../TypographyBase";
 
 const ClockWidget = () => {
   const { date, time } = useClock();
-  const isDarkMode = useDarkMode();
 
   return (
     <Container>
-      <DateText isDarkMode={isDarkMode}>{date}</DateText>
-      <TimeText isDarkMode={isDarkMode}>{time}</TimeText>
+      <DateText>{date}</DateText>
+      <TimeText>{time}</TimeText>
     </Container>
   );
 };
 
 export default ClockWidget;
 
-export const ClockWidgetContainer = styled.View`
-  flex: 1;
-`;
+export const ClockWidgetContainer = styled.View``;
 
 const Container = styled.View`
-  height: 100%;
+  height: 72px;
 `;
 
 const DateText = styled(TypographyBase)`
