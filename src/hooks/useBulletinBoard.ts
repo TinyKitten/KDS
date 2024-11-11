@@ -1,4 +1,4 @@
-import { SUPABASE_KEY, SUPABASE_URL } from "@env";
+import { DEFAULT_CHANNEL, SUPABASE_KEY, SUPABASE_URL } from "@env";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { BulletinBoardData } from "../models/BBPost";
@@ -14,6 +14,7 @@ const useBulletinBoard = () => {
       const { data: bbsData, error: bbsError } = await supabase
         .from<BulletinBoardData>("bulletinboard")
         .select("*")
+        .eq("channel", DEFAULT_CHANNEL || "")
         .limit(1)
         .order("id", { ascending: false });
       setLatestPost(bbsData?.[0] ?? null);
@@ -22,6 +23,9 @@ const useBulletinBoard = () => {
     const bbsSub = supabase
       .from<BulletinBoardData>("bulletinboard")
       .on("INSERT", async (payload) => {
+        if (payload.new.channel !== (DEFAULT_CHANNEL || "")) {
+          return;
+        }
         // NOTE: ビープ音再生終了まで待つ意味はない
         playBeep();
         setLatestPost(payload.new);

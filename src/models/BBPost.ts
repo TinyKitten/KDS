@@ -4,4 +4,5 @@ export type BulletinBoardData = {
   text: string;
   qr_text: string;
   created_at: string;
+  channel: string | null;
 };
