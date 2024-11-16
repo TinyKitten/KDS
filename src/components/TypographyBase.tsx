@@ -11,7 +11,6 @@ export const TypographyBase = (props: TextProps) => {
         {
           color: isDarkMode ? "#fff" : "#000",
           fontWeight: "bold",
-          includeFontPadding: false,
           textAlignVertical: "center",
         },
         props.style,

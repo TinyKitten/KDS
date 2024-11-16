@@ -10,11 +10,18 @@ import WeatherWidget, {
 } from "../components/widgets/Weather";
 import useBulletinBoard from "../hooks/useBulletinBoard";
 import useDarkMode from "../hooks/useDarkMode";
+import { NotifyData } from "../models/Notify";
+import { TypographyBase } from "./TypographyBase";
 import Credit, { CreditWidgetContainer } from "./widgets/Credit";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
-export default function Widgets() {
+type Props = {
+  uncheckedNotify: NotifyData | null;
+  confirmNotify: () => void;
+};
+
+export default function Widgets({ uncheckedNotify, confirmNotify }: Props) {
   useKeepAwake();
   const { latestPost } = useBulletinBoard();
   const isDarkMode = useDarkMode();
@@ -43,6 +50,20 @@ export default function Widgets() {
             value={latestPost.qr_text}
           />
         ) : null}
+        {uncheckedNotify ? (
+          <NotifyTouchable onPress={confirmNotify} activeOpacity={1}>
+            <NotifyTitle>{uncheckedNotify.title}</NotifyTitle>
+            <NotifyDescription>{uncheckedNotify.description}</NotifyDescription>
+            <NotifyTips>
+              {uncheckedNotify.urgent ? (
+                <BoldNotifyTips>URGENT TOPIC RECEIVED </BoldNotifyTips>
+              ) : (
+                <></>
+              )}
+              Tap to dismiss
+            </NotifyTips>
+          </NotifyTouchable>
+        ) : null}
         <CreditWidgetContainer>
           <Credit />
         </CreditWidgetContainer>
@@ -70,4 +91,30 @@ const BottomWidgetContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+`;
+
+const NotifyTips = styled(TypographyBase)`
+  font-size: 14px;
+  margin-top: 8px;
+  opacity: 0.75;
+  font-weight: normal;
+`;
+
+const BoldNotifyTips = styled(NotifyTips)`
+  font-weight: 900;
+`;
+
+const NotifyTitle = styled(TypographyBase)`
+  font-size: 32px;
+`;
+
+const NotifyDescription = styled(TypographyBase)`
+  font-size: ${!isTablet() ? 18 : 24}px;
+`;
+
+const NotifyTouchable = styled.TouchableOpacity`
+  flex: 1;
+  margin-right: 16px;
+  padding-left: 8px;
+  padding-right: 8px;
 `;

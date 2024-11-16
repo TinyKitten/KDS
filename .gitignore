@@ -19,3 +19,4 @@ yarn-error.log
 
 # Copyright protected
 src/assets/beep.mp3
+src/assets/urgentBuzzer.mp3
