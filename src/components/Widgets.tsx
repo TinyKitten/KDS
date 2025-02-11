@@ -10,7 +10,7 @@ import WeatherWidget, {
 } from "../components/widgets/Weather";
 import useBulletinBoard from "../hooks/useBulletinBoard";
 import useDarkMode from "../hooks/useDarkMode";
-import { NotifyData } from "../models/Notify";
+import type { NotifyData } from "../models/Notify";
 import { TypographyBase } from "./TypographyBase";
 import Credit, { CreditWidgetContainer } from "./widgets/Credit";
 
@@ -57,9 +57,7 @@ export default function Widgets({ uncheckedNotify, confirmNotify }: Props) {
 						<NotifyTips>
 							{uncheckedNotify.urgent ? (
 								<BoldNotifyTips>URGENT TOPIC RECEIVED </BoldNotifyTips>
-							) : (
-								<></>
-							)}
+							) : null}
 							Tap to dismiss
 						</NotifyTips>
 					</NotifyTouchable>

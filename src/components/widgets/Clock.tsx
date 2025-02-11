@@ -18,12 +18,13 @@ export default ClockWidget;
 export const ClockWidgetContainer = styled.View``;
 
 const Container = styled.View`
-  height: 72px;
+  height: 96px;
 `;
 
 const DateText = styled(TypographyBase)`
   font-weight: 500;
   font-size: 24px;
+margin-bottom: 8px;
 `;
 
 const TimeText = styled(TypographyBase)`
