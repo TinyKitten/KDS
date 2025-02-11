@@ -12,99 +12,99 @@ import { TypographyBase } from "../TypographyBase";
 import { WeatherIcon } from "../WeatherIcon";
 
 const WeatherWidget = () => {
-  const { coords, granted: locationPermissionGranted } = useCurrentPosition();
-  const { data: weather } = useWeather(coords?.latitude, coords?.longitude);
-  const isDarkMode = useDarkMode();
+	const { coords, granted: locationPermissionGranted } = useCurrentPosition();
+	const { data: weather } = useWeather(coords?.latitude, coords?.longitude);
+	const isDarkMode = useDarkMode();
 
-  const fill = isDarkMode ? "#fff" : "#000";
+	const fill = isDarkMode ? "#fff" : "#000";
 
-  const {
-    error: reverseGeocodingError,
-    isLoading: reverseGeocodingLoading,
-    data: reverseGeocodingRes,
-  } = useReverseGeocoding(coords?.latitude, coords?.longitude);
+	const {
+		error: reverseGeocodingError,
+		isLoading: reverseGeocodingLoading,
+		data: reverseGeocodingRes,
+	} = useReverseGeocoding(coords?.latitude, coords?.longitude);
 
-  const placeName = useMemo(() => {
-    if (reverseGeocodingLoading) {
-      return "Loading...";
-    }
-    if (reverseGeocodingError) {
-      return "";
-    }
-    const results = reverseGeocodingRes?.results ?? [];
-    const addrComps = results[0]?.address_components ?? [];
-    if (!results.length) {
-      return "Unknown";
-    }
+	const placeName = useMemo(() => {
+		if (reverseGeocodingLoading) {
+			return "Loading...";
+		}
+		if (reverseGeocodingError) {
+			return "";
+		}
+		const results = reverseGeocodingRes?.results ?? [];
+		const addrComps = results[0]?.address_components ?? [];
+		if (!results.length) {
+			return "Unknown";
+		}
 
-    const pref = addrComps.find(
-      (c) =>
-        c.types.findIndex((t) => t === "administrative_area_level_1") !== -1
-    );
-    const city = addrComps.find(
-      (c) => c.types.findIndex((t) => t === "locality") !== -1
-    );
+		const pref = addrComps.find(
+			(c) =>
+				c.types.findIndex((t) => t === "administrative_area_level_1") !== -1,
+		);
+		const city = addrComps.find(
+			(c) => c.types.findIndex((t) => t === "locality") !== -1,
+		);
 
-    return `${city?.short_name}, ${pref?.short_name}`;
-  }, [reverseGeocodingLoading, reverseGeocodingError, reverseGeocodingRes]);
+		return `${city?.short_name}, ${pref?.short_name}`;
+	}, [reverseGeocodingLoading, reverseGeocodingError, reverseGeocodingRes]);
 
-  if (!weather) {
-    return (
-      <Container>
-        <PlaceName>Loading...</PlaceName>
-      </Container>
-    );
-  }
+	if (!weather) {
+		return (
+			<Container>
+				<PlaceName>Loading...</PlaceName>
+			</Container>
+		);
+	}
 
-  if (!locationPermissionGranted) {
-    return (
-      <Container>
-        <PlaceName>Location permission has not been granted.</PlaceName>
-      </Container>
-    );
-  }
+	if (!locationPermissionGranted) {
+		return (
+			<Container>
+				<PlaceName>Location permission has not been granted.</PlaceName>
+			</Container>
+		);
+	}
 
-  const windRotation = getRotation(weather.windDirection);
+	const windRotation = getRotation(weather.windDirection);
 
-  return (
-    <Container>
-      <PlaceName>{placeName}</PlaceName>
-      <ConditionContainer>
-        <CurrentContainer>
-          <WeatherIconContainer>
-            <WeatherIcon weatherCode={weather.weatherCode} />
-          </WeatherIconContainer>
-          <CurrentTemperature>
-            {Math.round(weather.temperature)}°
-          </CurrentTemperature>
-        </CurrentContainer>
-        <ValuesContainer>
-          <RowContainer>
-            <ValueContainer>
-              <LowestTempChevron fill={fill} />
-              <ValueText>{Math.round(weather.temperatureMin[0])}°</ValueText>
-            </ValueContainer>
-            <ValueContainer>
-              <HighestChevron fill={fill} />
-              <ValueText>
-                {Math.round(weather.temperatureMax[0] ?? 0)}°
-              </ValueText>
-            </ValueContainer>
-          </RowContainer>
-          <RowContainer>
-            <ValueContainer>
-              <Wind fill={fill} />
-              <ValueText>{Math.round(weather.windSpeed ?? 0)}</ValueText>
-            </ValueContainer>
-            <ValueContainer column>
-              <TinyText>{windRotation}</TinyText>
-              <TinyText>km/h</TinyText>
-            </ValueContainer>
-          </RowContainer>
-        </ValuesContainer>
-      </ConditionContainer>
-    </Container>
-  );
+	return (
+		<Container>
+			<PlaceName>{placeName}</PlaceName>
+			<ConditionContainer>
+				<CurrentContainer>
+					<WeatherIconContainer>
+						<WeatherIcon weatherCode={weather.weatherCode} />
+					</WeatherIconContainer>
+					<CurrentTemperature>
+						{Math.round(weather.temperature)}°
+					</CurrentTemperature>
+				</CurrentContainer>
+				<ValuesContainer>
+					<RowContainer>
+						<ValueContainer>
+							<LowestTempChevron fill={fill} />
+							<ValueText>{Math.round(weather.temperatureMin[0])}°</ValueText>
+						</ValueContainer>
+						<ValueContainer>
+							<HighestChevron fill={fill} />
+							<ValueText>
+								{Math.round(weather.temperatureMax[0] ?? 0)}°
+							</ValueText>
+						</ValueContainer>
+					</RowContainer>
+					<RowContainer>
+						<ValueContainer>
+							<Wind fill={fill} />
+							<ValueText>{Math.round(weather.windSpeed ?? 0)}</ValueText>
+						</ValueContainer>
+						<ValueContainer column>
+							<TinyText>{windRotation}</TinyText>
+							<TinyText>km/h</TinyText>
+						</ValueContainer>
+					</RowContainer>
+				</ValuesContainer>
+			</ConditionContainer>
+		</Container>
+	);
 };
 
 const Container = styled.View`

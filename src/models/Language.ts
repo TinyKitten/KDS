@@ -1,13 +1,13 @@
 export interface DetectLanguage {
-  data: Data;
+	data: Data;
 }
 
 export interface Data {
-  detections: Array<Detection[]>;
+	detections: Array<Detection[]>;
 }
 
 export interface Detection {
-  isReliable: boolean;
-  language: string;
-  confidence: number;
+	isReliable: boolean;
+	language: string;
+	confidence: number;
 }

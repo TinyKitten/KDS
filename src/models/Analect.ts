@@ -1,6 +1,6 @@
 type Analect = {
-  text: string;
-  author: string;
+	text: string;
+	author: string;
 };
 
 export default Analect;

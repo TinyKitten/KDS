@@ -6,7 +6,7 @@ import styled from "styled-components/native";
 import ClockWidget, { ClockWidgetContainer } from "../components/widgets/Clock";
 import MemoWidget, { MemoWidgetContainer } from "../components/widgets/Memo";
 import WeatherWidget, {
-  WeatherWidgetContainer,
+	WeatherWidgetContainer,
 } from "../components/widgets/Weather";
 import useBulletinBoard from "../hooks/useBulletinBoard";
 import useDarkMode from "../hooks/useDarkMode";
@@ -17,59 +17,59 @@ import Credit, { CreditWidgetContainer } from "./widgets/Credit";
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 type Props = {
-  uncheckedNotify: NotifyData | null;
-  confirmNotify: () => void;
+	uncheckedNotify: NotifyData | null;
+	confirmNotify: () => void;
 };
 
 export default function Widgets({ uncheckedNotify, confirmNotify }: Props) {
-  useKeepAwake();
-  const { latestPost } = useBulletinBoard();
-  const isDarkMode = useDarkMode();
+	useKeepAwake();
+	const { latestPost } = useBulletinBoard();
+	const isDarkMode = useDarkMode();
 
-  return (
-    <WidgetsContainer>
-      <TopWidgetContainer>
-        <ClockWidgetContainer>
-          <ClockWidget />
-        </ClockWidgetContainer>
-        <WeatherWidgetContainer>
-          <WeatherWidget />
-        </WeatherWidgetContainer>
-      </TopWidgetContainer>
+	return (
+		<WidgetsContainer>
+			<TopWidgetContainer>
+				<ClockWidgetContainer>
+					<ClockWidget />
+				</ClockWidgetContainer>
+				<WeatherWidgetContainer>
+					<WeatherWidget />
+				</WeatherWidgetContainer>
+			</TopWidgetContainer>
 
-      <MemoWidgetContainer>
-        <MemoWidget latestPost={latestPost} />
-      </MemoWidgetContainer>
+			<MemoWidgetContainer>
+				<MemoWidget latestPost={latestPost} />
+			</MemoWidgetContainer>
 
-      <BottomWidgetContainer>
-        {latestPost?.qr_text ? (
-          <QRCode
-            size={isTablet() ? 64 : 48}
-            backgroundColor="transparent"
-            color={isDarkMode ? "#fff" : "#000"}
-            value={latestPost.qr_text}
-          />
-        ) : null}
-        {uncheckedNotify ? (
-          <NotifyTouchable onPress={confirmNotify} activeOpacity={1}>
-            <NotifyTitle>{uncheckedNotify.title}</NotifyTitle>
-            <NotifyDescription>{uncheckedNotify.description}</NotifyDescription>
-            <NotifyTips>
-              {uncheckedNotify.urgent ? (
-                <BoldNotifyTips>URGENT TOPIC RECEIVED </BoldNotifyTips>
-              ) : (
-                <></>
-              )}
-              Tap to dismiss
-            </NotifyTips>
-          </NotifyTouchable>
-        ) : null}
-        <CreditWidgetContainer>
-          <Credit />
-        </CreditWidgetContainer>
-      </BottomWidgetContainer>
-    </WidgetsContainer>
-  );
+			<BottomWidgetContainer>
+				{latestPost?.qr_text ? (
+					<QRCode
+						size={isTablet() ? 64 : 48}
+						backgroundColor="transparent"
+						color={isDarkMode ? "#fff" : "#000"}
+						value={latestPost.qr_text}
+					/>
+				) : null}
+				{uncheckedNotify ? (
+					<NotifyTouchable onPress={confirmNotify} activeOpacity={1}>
+						<NotifyTitle>{uncheckedNotify.title}</NotifyTitle>
+						<NotifyDescription>{uncheckedNotify.description}</NotifyDescription>
+						<NotifyTips>
+							{uncheckedNotify.urgent ? (
+								<BoldNotifyTips>URGENT TOPIC RECEIVED </BoldNotifyTips>
+							) : (
+								<></>
+							)}
+							Tap to dismiss
+						</NotifyTips>
+					</NotifyTouchable>
+				) : null}
+				<CreditWidgetContainer>
+					<Credit />
+				</CreditWidgetContainer>
+			</BottomWidgetContainer>
+		</WidgetsContainer>
+	);
 }
 
 const WidgetsContainer = styled.View`

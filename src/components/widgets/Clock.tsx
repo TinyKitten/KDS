@@ -3,14 +3,14 @@ import useClock from "../../hooks/useClock";
 import { TypographyBase } from "../TypographyBase";
 
 const ClockWidget = () => {
-  const { date, time } = useClock();
+	const { date, time } = useClock();
 
-  return (
-    <Container>
-      <DateText>{date}</DateText>
-      <TimeText>{time}</TimeText>
-    </Container>
-  );
+	return (
+		<Container>
+			<DateText>{date}</DateText>
+			<TimeText>{time}</TimeText>
+		</Container>
+	);
 };
 
 export default ClockWidget;

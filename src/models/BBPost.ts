@@ -1,8 +1,8 @@
 export type BulletinBoardData = {
-  id: number;
-  heading: string;
-  text: string;
-  qr_text: string;
-  created_at: string;
-  channel: string | null;
+	id: number;
+	heading: string;
+	text: string;
+	qr_text: string;
+	created_at: string;
+	channel: string | null;
 };

@@ -3,24 +3,24 @@ import { LocationObjectCoords } from "expo-location";
 import { useEffect, useState } from "react";
 
 export const useCurrentPosition = (): {
-  coords: LocationObjectCoords | undefined;
-  granted: boolean;
+	coords: LocationObjectCoords | undefined;
+	granted: boolean;
 } => {
-  const [granted, setGranted] = useState(false);
-  const [location, setLocation] = useState<Location.LocationObject>();
+	const [granted, setGranted] = useState(false);
+	const [location, setLocation] = useState<Location.LocationObject>();
 
-  useEffect(() => {
-    (async () => {
-      const result = await Location.requestForegroundPermissionsAsync();
-      setGranted(result.granted);
-      if (result.granted) {
-        setLocation(await Location.getCurrentPositionAsync());
-      }
-    })();
-  }, []);
+	useEffect(() => {
+		(async () => {
+			const result = await Location.requestForegroundPermissionsAsync();
+			setGranted(result.granted);
+			if (result.granted) {
+				setLocation(await Location.getCurrentPositionAsync());
+			}
+		})();
+	}, []);
 
-  return {
-    coords: location?.coords,
-    granted,
-  };
+	return {
+		coords: location?.coords,
+		granted,
+	};
 };

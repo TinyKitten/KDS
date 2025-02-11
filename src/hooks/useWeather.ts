@@ -3,22 +3,22 @@ import { weatherFetcher } from "../api/weather";
 import { WeatherData } from "../models/WeatherData";
 
 export const useWeather = (
-  latitude: number | undefined,
-  longitude: number | undefined
+	latitude: number | undefined,
+	longitude: number | undefined,
 ): {
-  error: unknown;
-  isLoading: boolean;
-  data: WeatherData | undefined;
+	error: unknown;
+	isLoading: boolean;
+	data: WeatherData | undefined;
 } => {
-  const { error, data, isLoading } = useQuery<WeatherData | undefined>(
-    ["weather", latitude, longitude],
-    () => weatherFetcher(latitude ?? 0, longitude ?? 0),
-    { enabled: !!latitude && !!longitude, refetchInterval: 10 * 60 * 1000 }
-  );
+	const { error, data, isLoading } = useQuery<WeatherData | undefined>(
+		["weather", latitude, longitude],
+		() => weatherFetcher(latitude ?? 0, longitude ?? 0),
+		{ enabled: !!latitude && !!longitude, refetchInterval: 10 * 60 * 1000 },
+	);
 
-  return {
-    error,
-    isLoading,
-    data,
-  };
+	return {
+		error,
+		isLoading,
+		data,
+	};
 };

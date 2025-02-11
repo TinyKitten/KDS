@@ -3,28 +3,28 @@ import useAnalect from "../../hooks/useAnalect";
 import { TypographyBase } from "../TypographyBase";
 
 const AnalectWidget = () => {
-  const analect = useAnalect();
+	const analect = useAnalect();
 
-  if (!analect) {
-    return null;
-  }
+	if (!analect) {
+		return null;
+	}
 
-  return (
-    <Container>
-      <AnalectText>“{analect.text}”</AnalectText>
-      <AnalectAuthor>
-        <Dash />
-        <AnalectAuthorName>&nbsp;{analect.author}</AnalectAuthorName>
-      </AnalectAuthor>
-    </Container>
-  );
+	return (
+		<Container>
+			<AnalectText>“{analect.text}”</AnalectText>
+			<AnalectAuthor>
+				<Dash />
+				<AnalectAuthorName>&nbsp;{analect.author}</AnalectAuthorName>
+			</AnalectAuthor>
+		</Container>
+	);
 };
 
 const Dash = () => (
-  <DashContainer>
-    <DashText first>&mdash;</DashText>
-    <DashText>&mdash;</DashText>
-  </DashContainer>
+	<DashContainer>
+		<DashText first>&mdash;</DashText>
+		<DashText>&mdash;</DashText>
+	</DashContainer>
 );
 
 const DashContainer = styled.View`

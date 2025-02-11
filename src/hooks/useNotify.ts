@@ -7,37 +7,38 @@ import { playBeep, playUrgentBuzzer } from "../utils/beep";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const useSubscribeNotify = () => {
-  const [uncheckedNotify, setUncheckedNotify] = useState<NotifyData | null>(
-    null,
-  );
+	const [uncheckedNotify, setUncheckedNotify] = useState<NotifyData | null>(
+		null,
+	);
 
-  const confirm = useCallback(() => setUncheckedNotify(null), [
-    setUncheckedNotify,
-  ]);
+	const confirm = useCallback(
+		() => setUncheckedNotify(null),
+		[setUncheckedNotify],
+	);
 
-  useEffect(() => {
-    const notifySub = supabase
-      .from<NotifyData>("notifies")
-      .on("INSERT", async (payload) => {
-        if (payload.new.channel !== (DEFAULT_CHANNEL || "")) {
-          return;
-        }
+	useEffect(() => {
+		const notifySub = supabase
+			.from<NotifyData>("notifies")
+			.on("INSERT", async (payload) => {
+				if (payload.new.channel !== (DEFAULT_CHANNEL || "")) {
+					return;
+				}
 
-        if (payload.new.urgent) {
-          playUrgentBuzzer();
-        } else {
-          playBeep();
-        }
-        setUncheckedNotify(payload.new);
-      })
-      .subscribe();
+				if (payload.new.urgent) {
+					playUrgentBuzzer();
+				} else {
+					playBeep();
+				}
+				setUncheckedNotify(payload.new);
+			})
+			.subscribe();
 
-    return () => {
-      notifySub.unsubscribe();
-    };
-  }, [setUncheckedNotify]);
+		return () => {
+			notifySub.unsubscribe();
+		};
+	}, [setUncheckedNotify]);
 
-  return { uncheckedNotify, confirm };
+	return { uncheckedNotify, confirm };
 };
 
 export default useSubscribeNotify;
