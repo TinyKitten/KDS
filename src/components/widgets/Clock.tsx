@@ -22,9 +22,9 @@ const Container = styled.View`
 `;
 
 const DateText = styled(TypographyBase)`
-  font-weight: 500;
+  font-weight: 600;
   font-size: 24px;
-margin-bottom: 8px;
+  margin-bottom: 8px;
 `;
 
 const TimeText = styled(TypographyBase)`
