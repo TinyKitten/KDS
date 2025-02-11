@@ -97,7 +97,6 @@ const NotifyTips = styled(TypographyBase)`
   font-size: 14px;
   margin-top: 8px;
   opacity: 0.75;
-  font-weight: normal;
 `;
 
 const BoldNotifyTips = styled(NotifyTips)`

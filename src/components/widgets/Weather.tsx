@@ -114,7 +114,7 @@ const Container = styled.View`
 
 const PlaceName = styled(TypographyBase)`
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   text-align: right;
 `;
 

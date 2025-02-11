@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components/native";
 import useClock from "../../hooks/useClock";
 import { TypographyBase } from "../TypographyBase";
@@ -28,7 +27,7 @@ const DateText = styled(TypographyBase)`
 `;
 
 const TimeText = styled(TypographyBase)`
-  font-weight: 700;
+  font-weight: 600;
   font-size: 48px;
   line-height: 48px;
 `;
