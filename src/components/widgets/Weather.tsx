@@ -5,11 +5,11 @@ import useDarkMode from "../../hooks/useDarkMode";
 import { useReverseGeocoding } from "../../hooks/useReverseGeocoding";
 import { useWeather } from "../../hooks/useWeather";
 import getRotation from "../../utils/rotation";
+import { TypographyBase } from "../TypographyBase";
+import { WeatherIcon } from "../WeatherIcon";
 import HighestChevron from "../icons/HighestChevron";
 import LowestTempChevron from "../icons/LowestChevron";
 import Wind from "../icons/Wind";
-import { TypographyBase } from "../TypographyBase";
-import { WeatherIcon } from "../WeatherIcon";
 
 const WeatherWidget = () => {
 	const { coords, granted: locationPermissionGranted } = useCurrentPosition();
@@ -109,7 +109,7 @@ const WeatherWidget = () => {
 
 const Container = styled.View`
   align-self: flex-end;
-  height: 72px;
+  height: 96px;
 `;
 
 const PlaceName = styled(TypographyBase)`
