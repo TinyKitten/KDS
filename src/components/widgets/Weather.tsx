@@ -79,7 +79,7 @@ const WeatherWidget = () => {
 					</CurrentTemperature>
 				</CurrentContainer>
 				<ValuesContainer>
-					<RowContainer>
+					<TemperatureContainer>
 						<ValueContainer>
 							<LowestTempChevron fill={fill} />
 							<ValueText>{Math.round(weather.temperatureMin[0])}°</ValueText>
@@ -90,8 +90,8 @@ const WeatherWidget = () => {
 								{Math.round(weather.temperatureMax[0] ?? 0)}°
 							</ValueText>
 						</ValueContainer>
-					</RowContainer>
-					<RowContainer>
+					</TemperatureContainer>
+					<WindContainer>
 						<ValueContainer>
 							<Wind fill={fill} />
 							<ValueText>{Math.round(weather.windSpeed ?? 0)}</ValueText>
@@ -100,7 +100,7 @@ const WeatherWidget = () => {
 							<TinyText>{windRotation}</TinyText>
 							<TinyText>km/h</TinyText>
 						</ValueContainer>
-					</RowContainer>
+					</WindContainer>
 				</ValuesContainer>
 			</ConditionContainer>
 		</Container>
@@ -138,7 +138,12 @@ const CurrentTemperature = styled(TypographyBase)`
 
 const ValuesContainer = styled.View``;
 
-const RowContainer = styled.View`
+const TemperatureContainer = styled.View`
+  flex-direction: row;
+  gap: 4px;
+`;
+
+const WindContainer = styled.View`
   flex-direction: row;
 `;
 
