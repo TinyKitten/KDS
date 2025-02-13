@@ -1,5 +1,5 @@
 import React from "react";
-import { Path, Svg, SvgProps } from "react-native-svg";
+import { Path, Svg, type SvgProps } from "react-native-svg";
 
 const HighestChevron = ({ fill }: SvgProps) => (
 	<Svg width="12" height="8" viewBox="0 0 12 8" fill="none">

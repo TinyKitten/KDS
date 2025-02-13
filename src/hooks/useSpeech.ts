@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Tts from "react-native-tts";
 import { detectLanguageFetcher } from "../api/language";
-import { DetectLanguage } from "../models/Language";
-import { SpeechRequestData } from "../models/SpeechRequest";
+import type { DetectLanguage } from "../models/Language";
+import type { SpeechRequestData } from "../models/SpeechRequest";
 import { playBeep } from "../utils/beep";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);

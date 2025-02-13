@@ -27,16 +27,16 @@ export const weatherFetcher = async (
 
 	const response = responses[0];
 
-	const current = response.current()!;
-	const daily = response.daily()!;
+	const current = response.current();
+	const daily = response.daily();
 
 	return {
-		temperature: current.variables(0)!.value(),
-		relativeHumidity: current.variables(1)!.value(),
-		weatherCode: current.variables(2)!.value(),
-		windSpeed: current.variables(3)!.value(),
-		windDirection: current.variables(4)!.value(),
-		temperatureMax: daily.variables(0)!.valuesArray()!,
-		temperatureMin: daily.variables(1)!.valuesArray()!,
+		temperature: current?.variables(0)?.value() ?? 0,
+		relativeHumidity: current?.variables(1)?.value() ?? 0,
+		weatherCode: current?.variables(2)?.value() ?? 0,
+		windSpeed: current?.variables(3)?.value() ?? 0,
+		windDirection: current?.variables(4)?.value() ?? 0,
+		temperatureMax: daily?.variables(0)?.valuesArray() ?? new Float32Array(),
+		temperatureMin: daily?.variables(1)?.valuesArray() ?? new Float32Array(),
 	};
 };

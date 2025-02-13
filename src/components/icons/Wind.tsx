@@ -1,5 +1,5 @@
 import React from "react";
-import { Path, Svg, SvgProps } from "react-native-svg";
+import { Path, Svg, type SvgProps } from "react-native-svg";
 
 const Wind = ({ fill }: SvgProps) => (
 	<Svg width="19" height="16" viewBox="0 0 19 16" fill="none">

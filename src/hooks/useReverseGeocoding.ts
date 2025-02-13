@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { reverseGeocodeFetcher } from "../api/location";
-import { ReverseGeocode } from "../models/RevserseGeocode";
+import type { ReverseGeocode } from "../models/RevserseGeocode";
 
 export const useReverseGeocoding = (
 	latitude: number | undefined,

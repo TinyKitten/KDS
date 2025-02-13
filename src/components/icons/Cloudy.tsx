@@ -1,5 +1,5 @@
 import React from "react";
-import { Path, Svg, SvgProps } from "react-native-svg";
+import { Path, Svg, type SvgProps } from "react-native-svg";
 
 const Cloudy = ({ fill }: SvgProps) => (
 	<Svg viewBox="0 0 118 86" fill="none">

@@ -1,7 +1,7 @@
 import { isTablet } from "react-native-device-info";
 import styled from "styled-components/native";
 import useSpeech from "../../hooks/useSpeech";
-import { BulletinBoardData } from "../../models/BBPost";
+import type { BulletinBoardData } from "../../models/BBPost";
 import { TypographyBase } from "../TypographyBase";
 
 const isSP = !isTablet();

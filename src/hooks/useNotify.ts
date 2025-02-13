@@ -1,7 +1,7 @@
 import { DEFAULT_CHANNEL, SUPABASE_KEY, SUPABASE_URL } from "@env";
 import { createClient } from "@supabase/supabase-js";
 import { useCallback, useEffect, useState } from "react";
-import { NotifyData } from "../models/Notify";
+import type { NotifyData } from "../models/Notify";
 import { playBeep, playUrgentBuzzer } from "../utils/beep";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -11,10 +11,7 @@ const useSubscribeNotify = () => {
 		null,
 	);
 
-	const confirm = useCallback(
-		() => setUncheckedNotify(null),
-		[setUncheckedNotify],
-	);
+	const confirm = useCallback(() => setUncheckedNotify(null), []);
 
 	useEffect(() => {
 		const notifySub = supabase
@@ -36,7 +33,7 @@ const useSubscribeNotify = () => {
 		return () => {
 			notifySub.unsubscribe();
 		};
-	}, [setUncheckedNotify]);
+	}, []);
 
 	return { uncheckedNotify, confirm };
 };

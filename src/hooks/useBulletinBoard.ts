@@ -1,7 +1,7 @@
 import { DEFAULT_CHANNEL, SUPABASE_KEY, SUPABASE_URL } from "@env";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
-import { BulletinBoardData } from "../models/BBPost";
+import type { BulletinBoardData } from "../models/BBPost";
 import { playBeep } from "../utils/beep";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);

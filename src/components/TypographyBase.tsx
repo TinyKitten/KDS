@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { StyleSheet, Text, TextProps } from "react-native";
+import { StyleSheet, Text, type TextProps } from "react-native";
 import useDarkMode from "../hooks/useDarkMode";
 
 export const TypographyBase = (props: TextProps) => {
@@ -20,7 +20,7 @@ export const TypographyBase = (props: TextProps) => {
 			default:
 				return "Inter_600SemiBold";
 		}
-	}, []);
+	}, [props.style]);
 
 	return (
 		<Text

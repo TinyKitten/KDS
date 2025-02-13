@@ -1,5 +1,5 @@
 import * as Location from "expo-location";
-import { LocationObjectCoords } from "expo-location";
+import type { LocationObjectCoords } from "expo-location";
 import { useEffect, useState } from "react";
 
 export const useCurrentPosition = (): {
