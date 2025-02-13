@@ -1,5 +1,5 @@
 import { fetchWeatherApi } from "openmeteo";
-import { WeatherData } from "../models/WeatherData";
+import type { WeatherData } from "../models/WeatherData";
 
 export const weatherFetcher = async (
 	latitude: number,
@@ -20,6 +20,7 @@ export const weatherFetcher = async (
 		daily: ["temperature_2m_max", "temperature_2m_min"],
 		timezone: "Asia/Tokyo",
 		forecast_days: 1,
+		wind_speed_unit: "ms",
 	};
 
 	const responses = await fetchWeatherApi(url, params);

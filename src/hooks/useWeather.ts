@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { weatherFetcher } from "../api/weather";
-import { WeatherData } from "../models/WeatherData";
+import type { WeatherData } from "../models/WeatherData";
 
 export const useWeather = (
 	latitude: number | undefined,

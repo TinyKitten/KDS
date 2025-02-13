@@ -98,7 +98,7 @@ const WeatherWidget = () => {
 						</ValueContainer>
 						<ValueContainer column>
 							<TinyText>{windRotation}</TinyText>
-							<TinyText>km/h</TinyText>
+							<TinyText>m/s</TinyText>
 						</ValueContainer>
 					</WindContainer>
 				</ValuesContainer>
