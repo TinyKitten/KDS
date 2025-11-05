@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "KDS",
     description: "Kitten Digital Signage Application",
     start_url: "/",
-    display: "standalone",
+    display: "fullscreen",
     background_color: "#ffffff",
     theme_color: "#171717",
     orientation: "landscape",
