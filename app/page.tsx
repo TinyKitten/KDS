@@ -5,7 +5,7 @@ import { WeatherWidget } from "./components/widgets/Weather";
 
 export default function Home() {
   return (
-    <div className="flex flex-col p-12 min-h-screen bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex flex-col p-8 min-h-screen bg-zinc-50 font-sans dark:bg-black">
       <div className="flex justify-between gap-4">
         <ClockWidget />
         <WeatherWidget />
