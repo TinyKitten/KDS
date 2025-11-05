@@ -11,7 +11,7 @@ export default function Home() {
         <WeatherWidget />
       </div>
 
-      <div className="flex flex-1 lg:mt-8 mt-2">
+      <div className="flex flex-1 lg:mt-8 mt-4">
         <NoteWidget latestNote={null} />
       </div>
 
