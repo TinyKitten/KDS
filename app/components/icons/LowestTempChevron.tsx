@@ -1,0 +1,10 @@
+const LowestTempChevron = ({ fill = "#171717" }: { fill?: string }) => (
+  <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+    <path
+      d="M6 7.075L0 1.075L1.075 0L6 4.95L10.925 0.0249996L12 1.1L6 7.075Z"
+      fill={fill}
+    />
+  </svg>
+);
+
+export default LowestTempChevron;
