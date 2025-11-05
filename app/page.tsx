@@ -15,7 +15,7 @@ export default function Home() {
         <NoteWidget latestNote={null} />
       </div>
 
-      <div className="flex flex-row h-16 max-w-1/3 justify-start items-center">
+      <div className="flex flex-row h-12 max-w-1/3 justify-start items-center">
         <CreditWidget />
       </div>
     </div>
