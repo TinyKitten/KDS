@@ -53,7 +53,7 @@ export const WeatherWidget = () => {
   if (fetchWeatherLoading) {
     return (
       <div className="max-w-1/3 ">
-        <Typography>Loading...</Typography>
+        <Typography className="font-bold">Loading...</Typography>
       </div>
     );
   }
@@ -66,7 +66,9 @@ export const WeatherWidget = () => {
     console.error(fetchWeatherError);
     return (
       <div className="max-w-1/3 ">
-        <Typography>Error loading weather data</Typography>
+        <Typography className="font-bold">
+          Error loading weather data
+        </Typography>
       </div>
     );
   }
