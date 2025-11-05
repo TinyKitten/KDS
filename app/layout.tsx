@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${noto.className} antialiased overflow-hidden overscroll-none`}
+        className={`${noto.className} antialiased overflow-hidden overscroll-none select-none p-6 lg:p-8 h-screen bg-zinc-50 dark:bg-black`}
       >
         {children}
       </body>

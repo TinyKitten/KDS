@@ -5,17 +5,17 @@ import { WeatherWidget } from "./components/widgets/Weather";
 
 export default function Home() {
   return (
-    <div className="flex flex-col p-8 min-h-screen bg-zinc-50 font-sans dark:bg-black">
-      <div className="flex justify-between gap-4">
+    <div className="flex flex-col w-full h-full">
+      <div className="flex justify-between">
         <ClockWidget />
         <WeatherWidget />
       </div>
 
-      <div className="flex flex-1 mt-8">
+      <div className="flex flex-1 lg:mt-8 mt-2">
         <NoteWidget latestNote={null} />
       </div>
 
-      <div className="flex flex-row h-12 max-w-1/3 justify-start items-center">
+      <div className="flex flex-row h-12 max-w-1/3 justify-start">
         <CreditWidget />
       </div>
     </div>

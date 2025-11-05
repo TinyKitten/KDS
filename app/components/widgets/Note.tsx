@@ -8,11 +8,14 @@ const FALLBACK_NOTE: Partial<NoteData> = {
 
 export const NoteWidget = ({ latestNote }: { latestNote: NoteData | null }) => {
   return (
-    <div className="flex flex-col gap-3">
-      <Typography element="h1" className="text-4xl font-bold">
+    <div className="flex flex-col gap-1 lg:gap-3">
+      <Typography element="h1" className="text-3xl lg:text-4xl font-bold">
         {latestNote?.heading ?? FALLBACK_NOTE.heading}
       </Typography>
-      <Typography element="p" className="text-xl leading-8 font-bold">
+      <Typography
+        element="p"
+        className="text-lg leading-relaxed lg:text-xl font-bold"
+      >
         {latestNote?.text ?? FALLBACK_NOTE.text}
       </Typography>
     </div>
