@@ -4,7 +4,17 @@ export async function GET(request: Request) {
   const lon = searchParams.get("lon");
 
   if (!lat || !lon) {
-    return new Response("Missing latitude or longitude", { status: 400 });
+    return new Response(
+      JSON.stringify({
+        error: "Missing latitude or longitude",
+      }),
+      {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 
   try {
@@ -13,16 +23,39 @@ export async function GET(request: Request) {
     );
 
     if (!response.ok) {
-      throw new Error("Failed to fetch data from Google Maps API");
+      return new Response(
+        JSON.stringify({
+          error: "Failed to fetch reverse geocoding data",
+        }),
+        {
+          status: response.status,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
     }
 
     const data = await response.json();
 
-    return new Response(JSON.stringify(data), { status: 200 });
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error("Reverse geocoding error:", error);
-    return new Response("Failed to fetch reverse geocoding data", {
-      status: 500,
-    });
+    return new Response(
+      JSON.stringify({
+        error: "Failed to fetch reverse geocoding data",
+      }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 }

@@ -2,21 +2,28 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
 const useClock = () => {
-	const [dateString, setDateString] = useState("");
-	const [timeString, setTimeString] = useState("");
+  const [dateString, setDateString] = useState("");
+  const [timeString, setTimeString] = useState("");
 
-	useEffect(() => {
-		setInterval(() => {
-			const now = dayjs();
-			setDateString(now.format("MMMM DD, YYYY"));
-			setTimeString(now.format("HH:mm"));
-		}, 1000);
-	}, []);
+  useEffect(() => {
+    const updateTime = () => {
+      const now = dayjs();
+      setDateString(now.format("MMMM DD, YYYY"));
+      setTimeString(now.format("HH:mm"));
+    };
 
-	return {
-		date: dateString,
-		time: timeString,
-	};
+    updateTime();
+    const intervalId = setInterval(() => {
+      updateTime();
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  return {
+    date: dateString,
+    time: timeString,
+  };
 };
 
 export default useClock;
