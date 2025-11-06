@@ -1,11 +1,14 @@
-import type { MetadataRoute } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
-export default function manifest(): MetadataRoute.Manifest {
-  return {
+export const GET = (request: NextRequest) => {
+  const searchParams = request.nextUrl.searchParams;
+  const channel = searchParams.get("channel") || "everyone";
+
+  const manifest = {
     name: "Kitten Digital Signage",
     short_name: "KDS",
     description: "Kitten Digital Signage Application",
-    start_url: "/",
+    start_url: `/?channel=${channel}`,
     display: "fullscreen",
     background_color: "#ffffff",
     theme_color: "#171717",
@@ -23,4 +26,6 @@ export default function manifest(): MetadataRoute.Manifest {
       },
     ],
   };
-}
+
+  return NextResponse.json(manifest);
+};
