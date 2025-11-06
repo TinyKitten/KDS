@@ -11,11 +11,16 @@ export const useNoteStreaming = (
     );
 
     eventSource.onmessage = (event) => {
-      const result = NoteSchema.safeParse(event.data);
-      if (result.success) {
-        onNewNote(result.data);
-      } else {
-        console.error("Invalid note data:", result.error);
+      try {
+        const parsed = JSON.parse(event.data);
+        const result = NoteSchema.safeParse(parsed);
+        if (result.success) {
+          onNewNote(result.data);
+        } else {
+          console.error("Invalid note data:", result.error);
+        }
+      } catch (error) {
+        console.error("Failed to parse note event:", error);
       }
     };
 

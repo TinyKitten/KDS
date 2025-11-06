@@ -14,8 +14,11 @@ export async function GET(request: NextRequest) {
   const { readable, writable } = new TransformStream();
   const writer = writable.getWriter();
 
-  const listener = (message: string) =>
-    writer.write(new TextEncoder().encode(message));
+  const encoder = new TextEncoder();
+  const listener = (message: string) => {
+    const framedMessage = `data: ${message}\n\n`;
+    return writer.write(encoder.encode(framedMessage));
+  };
   await subscriber.subscribe(noteChannel, listener);
 
   request.signal.addEventListener("abort", async () => {
