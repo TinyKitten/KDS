@@ -10,8 +10,11 @@ import { useState } from "react";
 import { NoteData } from "../domain/note";
 import { useNoteStreaming } from "../hooks/useNoteStreaming";
 import { useSearchParams } from "next/navigation";
+import { useKeepWakeLock } from "../hooks/useKeepLock";
 
 export const Dashboard = () => {
+  useKeepWakeLock();
+
   const searchParams = useSearchParams();
 
   const channelParam = searchParams.get("channel") || "everyone";
