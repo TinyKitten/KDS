@@ -8,7 +8,7 @@ export const useWeather = (
   longitude: number | undefined
 ) => {
   const { data, error, isLoading, mutate } = useSWR<WeatherData>(
-    [latitude, longitude],
+    ["weather", latitude, longitude],
     () => weatherFetcher(latitude, longitude)
   );
 

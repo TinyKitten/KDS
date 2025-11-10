@@ -11,7 +11,7 @@ export const useReverseGeocoding = (
   data: ReverseGeocode | undefined;
 } => {
   const { error, data, isLoading } = useSWR<ReverseGeocode>(
-    [latitude, longitude],
+    ["reverseGeocoding", latitude, longitude],
     () => reverseGeocodeFetcher(latitude, longitude)
   );
 
