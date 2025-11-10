@@ -1,9 +1,9 @@
 "use client";
 
-import { CreditWidget } from "../components/Credit";
-import { ClockWidget } from "../components/widgets/Clock";
-import { NoteWidget } from "../components/widgets/Note";
-import { WeatherWidget } from "../components/widgets/Weather";
+import { CreditWidget } from "./widgets/Credit";
+import { ClockWidget } from "./widgets/Clock";
+import { NoteWidget } from "./widgets/Note";
+import { WeatherWidget } from "./widgets/Weather";
 import useSWR from "swr";
 import { noteFetcher } from "../fetchers/note";
 import { useState } from "react";
