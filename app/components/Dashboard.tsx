@@ -20,7 +20,7 @@ export const Dashboard = () => {
     data: firstNoteData,
     error: firstNoteError,
     isLoading: firstNoteLoading,
-  } = useSWR(channelParam, noteFetcher);
+  } = useSWR(["note", channelParam], () => noteFetcher(channelParam));
 
   const [noteDataBuffer, setNoteDataBuffer] = useState<NoteData | null>(null);
 
