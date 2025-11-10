@@ -80,16 +80,20 @@ self.addEventListener("fetch", (event) => {
       return;
     }
 
-    if (
-      url.pathname.startsWith("/api/note") ||
-      url.pathname.startsWith("/api/rg") ||
-      url.pathname.startsWith("/api/weather")
-    ) {
-      event.respondWith(staleWhileRevalidate(request, API_CACHE));
+    if (isApiRequest(url.pathname)) {
+      event.respondWith(networkFirstApi(request));
       return;
     }
   }
 });
+
+function isApiRequest(pathname) {
+  return (
+    pathname.startsWith("/api/note") ||
+    pathname.startsWith("/api/rg") ||
+    pathname.startsWith("/api/weather")
+  );
+}
 
 async function handleNavigationRequest(event) {
   const { request } = event;
@@ -140,31 +144,25 @@ async function cacheFirst(request, cacheName) {
   return response;
 }
 
-async function staleWhileRevalidate(request, cacheName) {
-  const cache = await caches.open(cacheName);
-  const cachedPromise = cache.match(request);
-  const networkPromise = fetch(request)
-    .then((response) => {
-      if (response && response.ok) {
-        cache.put(request, response.clone());
-      }
-      return response;
-    })
-    .catch(() => undefined);
+async function networkFirstApi(request) {
+  const cache = await caches.open(API_CACHE);
+  try {
+    const response = await fetch(request);
+    if (response && response.ok) {
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch (error) {
+    console.warn("[sw] API request failed, falling back to cache", error);
+    const cached = await cache.match(request);
+    if (cached) {
+      return cached;
+    }
 
-  const cached = await cachedPromise;
-  if (cached) {
-    void networkPromise;
-    return cached;
+    return new Response(JSON.stringify({ error: "offline" }), {
+      status: 503,
+      statusText: "Service Unavailable",
+      headers: { "Content-Type": "application/json" },
+    });
   }
-
-  const networkResponse = await networkPromise;
-  if (networkResponse) {
-    return networkResponse;
-  }
-
-  return new Response("Offline", {
-    status: 503,
-    statusText: "Service Unavailable",
-  });
 }
