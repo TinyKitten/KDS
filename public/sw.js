@@ -2,7 +2,6 @@ const VERSION = "v1";
 const STATIC_CACHE = `static-${VERSION}`;
 const RUNTIME_CACHE = `runtime-${VERSION}`;
 const API_CACHE = `api-${VERSION}`;
-const WEATHER_CACHE = `weather-${VERSION}`;
 const OFFLINE_URL = "/offline.html";
 const APP_SHELL = [
   "/",
@@ -33,7 +32,6 @@ self.addEventListener("activate", (event) => {
                 STATIC_CACHE,
                 RUNTIME_CACHE,
                 API_CACHE,
-                WEATHER_CACHE,
               ].includes(key)
           )
           .map((staleKey) => caches.delete(staleKey))
@@ -84,14 +82,12 @@ self.addEventListener("fetch", (event) => {
 
     if (
       url.pathname.startsWith("/api/note") ||
-      url.pathname.startsWith("/api/rg")
+      url.pathname.startsWith("/api/rg") ||
+      url.pathname.startsWith("/api/weather")
     ) {
       event.respondWith(staleWhileRevalidate(request, API_CACHE));
       return;
     }
-  } else if (url.hostname === "api.open-meteo.com") {
-    event.respondWith(staleWhileRevalidate(request, WEATHER_CACHE));
-    return;
   }
 });
 

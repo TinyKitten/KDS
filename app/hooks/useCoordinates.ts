@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 
-const fallbackLat = process.env.NEXT_PUBLIC_FALLBACK_LATITUDE;
-const fallbackLon = process.env.NEXT_PUBLIC_FALLBACK_LONGITUDE;
+const fallbackLat = Number.parseFloat(
+  process.env.NEXT_PUBLIC_FALLBACK_LATITUDE ?? ""
+);
+const fallbackLon = Number.parseFloat(
+  process.env.NEXT_PUBLIC_FALLBACK_LONGITUDE ?? ""
+);
 
 const FALLBACK_COORDINATES = {
-  latitude: Number.parseFloat(fallbackLat ?? ""),
-  longitude: Number.parseFloat(fallbackLon ?? ""),
+  latitude: fallbackLat,
+  longitude: fallbackLon,
 };
 
 export const useCoordinates = (): {
@@ -21,7 +25,10 @@ export const useCoordinates = (): {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        setCoordinates({ latitude, longitude });
+        setCoordinates({
+          latitude,
+          longitude,
+        });
       },
       (error) => {
         console.error("Error obtaining coordinates:", error);

@@ -16,7 +16,7 @@ export const WeatherWidget = () => {
     data: weatherData,
     error: fetchWeatherError,
     isLoading: fetchWeatherLoading,
-  } = useWeather(coords?.latitude ?? null, coords?.longitude ?? null);
+  } = useWeather(coords?.latitude, coords?.longitude);
 
   const {
     data: geocodedData,
@@ -25,8 +25,8 @@ export const WeatherWidget = () => {
   } = useReverseGeocoding(coords?.latitude, coords?.longitude);
 
   const windRotation = useMemo(
-    () => getRotation(weatherData?.windDirection),
-    [weatherData?.windDirection]
+    () => getRotation(weatherData?.current.wind_direction_10m),
+    [weatherData]
   );
 
   const placeName = useMemo(() => {
@@ -79,10 +79,10 @@ export const WeatherWidget = () => {
       <div className="flex flex-row items-center justify-center gap-1">
         <div className="flex flex-row items-start justify-center gap-2">
           <div className="w-12 h-12">
-            <WeatherIcon weatherCode={weatherData.weatherCode} />
+            <WeatherIcon weatherCode={weatherData.current.weather_code} />
           </div>
           <div className="text-5xl font-bold">
-            {Math.round(weatherData.temperature)}°
+            {Math.round(weatherData.current.temperature_2m)}°
           </div>
         </div>
 
@@ -91,13 +91,13 @@ export const WeatherWidget = () => {
             <div className="flex flex-row items-center justify-center gap-1">
               <LowestTempChevron />
               <Typography className="font-bold">
-                {Math.round(weatherData.temperatureMin[0])}°
+                {Math.round(weatherData.daily.temperature_2m_min[0])}°
               </Typography>
             </div>
             <div className="flex flex-row items-center justify-center gap-1">
               <HighestTempChevron />
               <Typography className="font-bold">
-                {Math.round(weatherData.temperatureMax[0])}°
+                {Math.round(weatherData.daily.temperature_2m_max[0])}°
               </Typography>
             </div>
           </div>
@@ -105,7 +105,7 @@ export const WeatherWidget = () => {
             <div className="flex flex-row items-center justify-center gap-1">
               <Wind />
               <Typography className="font-bold">
-                {Math.round(weatherData.windSpeed ?? 0)}
+                {Math.round(weatherData.current.wind_speed_10m ?? 0)}
               </Typography>
             </div>
 

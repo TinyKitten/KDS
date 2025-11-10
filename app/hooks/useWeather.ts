@@ -1,15 +1,15 @@
 import { WeatherData } from "../domain/weather";
 import { weatherFetcher } from "../fetchers/weather";
-import useSWRImmutable from "swr/immutable";
 import { useEffect } from "react";
+import useSWR from "swr";
 
 export const useWeather = (
-  latitude: number | null,
-  longitude: number | null
+  latitude: number | undefined,
+  longitude: number | undefined
 ) => {
-  const { data, error, isLoading, mutate } = useSWRImmutable<WeatherData>(
+  const { data, error, isLoading, mutate } = useSWR<WeatherData>(
     [latitude, longitude],
-    weatherFetcher
+    () => weatherFetcher(latitude, longitude)
   );
 
   useEffect(() => {
