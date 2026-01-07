@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KDS - Offline</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: 'Noto Sans JP', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: #09090b;
+        color: #fafafa;
+        text-align: center;
+      }
+      .card {
+        max-width: 28rem;
+        border: 1px solid rgba(250, 250, 250, 0.15);
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 25px 45px rgba(0, 0, 0, 0.45);
+        background: rgba(24, 24, 27, 0.8);
+        backdrop-filter: blur(8px);
+      }
+      h1 {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        margin-top: 0;
+        margin-bottom: 1rem;
+      }
+      p {
+        margin: 0;
+        line-height: 1.5;
+        font-size: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <h1>オフラインモード</h1>
+      <p>ネットワークへ再接続すると最新のボード情報が自動で同期されます。</p>
+    </main>
+  </body>
+</html>
